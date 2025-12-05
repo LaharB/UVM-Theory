@@ -1,4 +1,4 @@
-## 1.Working with Reporting Macro
+## Section 1 : Working with Reporting Macro
 ### This is a basic example of UVM_INFO reporting macros 
 
 ### Code
