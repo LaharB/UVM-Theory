@@ -1,5 +1,7 @@
-## Section 1 : Working with Reporting Macro
-### This is a basic example of UVM_INFO reporting macros 
+# Section 1 : Reporting Mechanisms
+
+## 1.Working with Reporting Macros
+### This is a basic example of UVM_INFO reporting macros
 
 ### Code
 
@@ -20,7 +22,7 @@ endmodule
 ### Simulation Result 
 ![alt_text](1.Working%20with%20Reporting%20Macros.png) 
 
-### 2.Printing Values of variables without automation
+## 2.Printing Values of variables without automation
 
 ### Code
 
@@ -43,7 +45,7 @@ endmodule
 
 ![alt_text](2.Printing%20Values%20of%20variables%20without%20automation.png)
 
-### Will update more...... 
+## Will update more...... 
 
 
 
