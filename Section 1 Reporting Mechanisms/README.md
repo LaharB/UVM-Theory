@@ -1,7 +1,7 @@
 # Section 1 : Reporting Mechanisms
 
 ## 1.Working with Reporting Macros
-### This is a basic example of UVM_INFO reporting macros
+### This is a basic example of UVM_INFO reporting macros vs $display 
 
 ### Code
 
@@ -14,7 +14,8 @@ module tb;
     int data = 101;
   
     initial begin
-    `uvm_info("TB_TOP", $sformatf("Value of data : %d", data) , UVM_LOW);  
+    `uvm_info("TB_TOP", $sformatf("Value of data : %d", data) , UVM_LOW);
+    $display("Hello World with Display");  
     end
   
 endmodule
