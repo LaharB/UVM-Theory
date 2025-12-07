@@ -21,7 +21,7 @@ module tb;
 endmodule
 ``` 
 ### Simulation Result 
-![alt_text](Section 1 Reporting Mechanisms\Simulation Results\1.Working with Reporting Macros.png) 
+![alt_text](Section 1 Reporting Mechanisms\1.Working with Reporting Macros.png) 
 
 ## 2.Printing Values of variables without automation
 
