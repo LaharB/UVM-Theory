@@ -21,7 +21,7 @@ module tb;
 endmodule
 ``` 
 ### Simulation Result 
-![alt_text](1.Working%20with%20Reporting%20Macros.png) 
+![alt_text](Section 1 Reporting Mechanisms\Simulation Results\1.Working with Reporting Macros.png) 
 
 ## 2.Printing Values of variables without automation
 
@@ -44,9 +44,31 @@ endmodule
 ```
 ### Simualtion 
 
-![alt_text](2.Printing%20Values%20of%20variables%20without%20automation.png)
+![alt_text](Section 1 Reporting Mechanisms\Simulation Results\2.Printing Values of variables without automation.png)
 
-## Will update more...... 
+## 3.Working with Verbosity level
+
+### Code
+
+```systemverilog
+   
+   `include "uvm_macros.svh"
+import uvm_pkg::*;
+
+module tb;
+  initial begin
+    uvm_top.set_report_verbosity_level(UVM_HIGH);  // HIGH means HIGH and lower than HIGH i.e. LOW, MEDIUM will print
+    $display("Default Verbosity Level:%0d", uvm_top.get_report_verbosity_level);
+    `uvm_info("TB_TOP", "String", UVM_HIGH);
+  end
+  
+endmodule
+
+
+```
+
+### Simulation Result
+![alt_text](Section 1 Reporting Mechanisms\Simulation Results\3.Working with Verbosity level.png)
 
 
 
