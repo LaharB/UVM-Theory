@@ -22,7 +22,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt_text](Section 1 Reporting Mechanisms/1.Working with Reporting Macros.png) 
+![alt text](<Simulation Results/1.WorkingWithReportingMacros.png>)
 
 ## 2.Printing Values of variables without automation
 
@@ -45,7 +45,7 @@ endmodule
 ```
 ### Simualtion 
 
-![alt_text](Section 1 Reporting Mechanisms\Simulation Results\2.Printing Values of variables without automation.png)
+![alt text](<Simulation Results/2.Printing Values of variables without automation.png>)
 
 ## 3.Working with Verbosity level
 
@@ -69,7 +69,8 @@ endmodule
 
 ### Simulation Result
 
-![alt_text](Section 1 Reporting Mechanisms\Simulation Results\3.Working with Verbosity level.png)
+![alt text](<Simulation Results/3.Working with Verbosity level.png>)
 
+## To be updated
 
 
