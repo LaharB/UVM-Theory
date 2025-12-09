@@ -85,12 +85,11 @@ endmodule
 
 _____________________________________________________________________
 
-<details><summary><b>4.Working with Verbosity level and ID<b></summary><br>
+<details><summary><b>4.Working with Verbosity level and ID</b></summary><br>
 
 ### Code
 
 ```systemverilog
-
 `include "uvm_macros.svh"
 import uvm_pkg::*;
 `include "uvm_macros.svh"
@@ -119,6 +118,7 @@ module tb;
     //drv.set_report_verbosity_level(UVM_HIGH);
     drv.run();
   end
+ 
 
 ```
 ### Simulation
@@ -129,7 +129,7 @@ module tb;
 
 _____________________________________________________________________
 
-<details><summary><b>To be updated<b></summary>
+<details><summary><b>To be updated</b></summary>
 
 
 
