@@ -85,7 +85,7 @@ endmodule
 
 _____________________________________________________________________
 
-<details><summary><b>4.Working with Verbosity level and ID<b></summary>
+<details><summary><b>4.Working with Verbosity level and ID<b></summary><br>
 
 ### Code
 
@@ -118,10 +118,7 @@ module tb;
     drv.set_report_id_verbosity("DRV1",UVM_HIGH);
     //drv.set_report_verbosity_level(UVM_HIGH);
     drv.run();
-  end 
-  
-  
-endmodule
+  end
 
 ```
 ### Simulation
