@@ -1,7 +1,9 @@
 # Section 1 : Reporting Mechanisms
 
-## 1.Working with Reporting Macros
-### This is a basic example of UVM_INFO reporting macros vs $display 
+<details>
+ <summary><b>1. Working with Reporting Macros</b></summary><br>
+
+This is a basic example of UVM_INFO reporting macros vs $display 
 
 ### Code
 
@@ -24,7 +26,11 @@ endmodule
 
 ![alt text](<Simulation Results/1.WorkingWithReportingMacros.png>)
 
-## 2.Printing Values of variables without automation
+</details>
+
+_____________________________________________________________________
+
+<details><summary><b>2.Printing Values of variables without automation</b></summary>
 
 ### Code
 
@@ -47,7 +53,11 @@ endmodule
 
 ![alt text](<Simulation Results/2.Printing Values of variables without automation.png>)
 
-## 3.Working with Verbosity level
+</details>
+
+_____________________________________________________________________
+
+<details><summary><b>3.Working with Verbosity level</b></summary>
 
 ### Code
 
@@ -71,7 +81,11 @@ endmodule
 
 ![alt text](<Simulation Results/3.Working with Verbosity level.png>)
 
-## 4.Working with Verbosity level and ID
+</details>
+
+_____________________________________________________________________
+
+<details><summary><b>4.Working with Verbosity level and ID<b></summary>
 
 ### Code
 
@@ -114,6 +128,14 @@ endmodule
 
 ![alt text](<Simulation Results/4.Working with Verbosity level and ID.png>)
 
-## To be updated
+</details>
+
+_____________________________________________________________________
+
+<details><summary><b>To be updated<b></summary>
 
 
+
+</details>
+
+_____________________________________________________________________
