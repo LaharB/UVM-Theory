@@ -47,7 +47,6 @@ module tb;
   end
 
 endmodule
-
 ```
 ### Simualtion 
 
@@ -73,8 +72,6 @@ module tb;
   end
   
 endmodule
-
-
 ```
 
 ### Simulation Result
@@ -118,8 +115,6 @@ module tb;
     //drv.set_report_verbosity_level(UVM_HIGH);
     drv.run();
   end
- 
-
 ```
 ### Simulation
 
