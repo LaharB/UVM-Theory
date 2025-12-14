@@ -124,7 +124,7 @@ module tb;
 
 _____________________________________________________________________
 
-<details><summary><b>5.Working with Individual Component</b></summary>
+<details><summary><b>5.Working with Individual Component</b></summary><br>
 
 ### Code
 
@@ -175,6 +175,9 @@ module tb;
  initial begin
    drv = new("DRV", null);
    e   = new("ENV", null);
+
+//by deafult : verbosity level is UVM_MEDIUM , so none of the uvm info messages will be displayed without setting them to UVM_HIGH 
+
 //    e.set_report_verbosity_level(UVM_HIGH);
 //    drv.set_report_verbosity_level(UVM_HIGH);
    drv.run();
@@ -193,3 +196,14 @@ endmodule
 </details>
 
 _____________________________________________________________________
+
+<details>
+ <summary><b>To be updated<b></summary><br>
+
+
+
+
+</details>
+
+_____________________________________________________________________
+
