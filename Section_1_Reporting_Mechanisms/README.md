@@ -129,7 +129,6 @@ _____________________________________________________________________
 ### Code
 
 ```systemverilog
-
 `include "uvm_macros.svh"
 import uvm_pkg::*;
  
@@ -182,13 +181,12 @@ module tb;
    e.run();
     
   end
-  
-  
+ 
 endmodule
 ```
 ### Simulation
 
-
+![alt text](<Simulation Results/5.Working with Individual Component.png>)
 
 
 
