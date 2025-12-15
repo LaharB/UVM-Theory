@@ -1,4 +1,4 @@
-# Section 1 : Reporting Mechanisms
+# Section 1 : UVM Reporting Mechanisms
 
 <details>
  <summary><b>1. Working with Reporting Macros</b></summary><br>
