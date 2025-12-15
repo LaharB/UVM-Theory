@@ -8,7 +8,7 @@ This repository consists of all the basic concepts and practices required to lea
 - Section 6 : TLM
 - Section 7 : Sequence
 
-<details><summary><b>Section 1 : Reporting Mechanisms</b></summary><br>
+<details><summary><b>Section 1 : UVM Reporting Mechanisms</b></summary><br>
 
 <details>
  <summary><b>1. Working with Reporting Macros</b></summary><br>
