@@ -8,7 +8,7 @@ This repository consists of all the basic concepts and practices required to lea
 - Section 6 : TLM
 - Section 7 : Sequence
 
-# Section 1 : Reporting Mechanisms
+<details><summary><b>Section 1 : Reporting Mechanisms<b></summary>
 
 <details>
  <summary><b>1. Working with Reporting Macros</b></summary><br>
@@ -217,3 +217,6 @@ _____________________________________________________________________
 
 _____________________________________________________________________
 
+
+
+</details>
