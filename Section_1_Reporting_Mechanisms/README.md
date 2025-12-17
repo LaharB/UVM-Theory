@@ -287,9 +287,98 @@ endmodule
 
 _____________________________________________________________________
 
-<details><summary><b>     </b></summary><br>
+<details><summary><b>7.Other Working Macros</b></summary><br>
 
+### Code
 
+```systemverilog
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+ 
+//////////////////////////////////////////////////
+class driver extends uvm_driver;
+  `uvm_component_utils(driver)
+  
+  function new(string path , uvm_component parent);
+    super.new(path, parent);
+  endfunction
 
+  task run();
+    `uvm_info("DRV", "Informational Message", UVM_NONE);
+    `uvm_warning("DRV", "Potential Error");
+    `uvm_error("DRV", "Real Error");
+     #10;
+    `uvm_fatal("DRV", "Simulation cannot continue");
+  endtask
+  
+endclass
+ 
+/////////////////////////////////////////////
+  
+module tb;
+  driver d;
+  
+  initial begin
+    d = new("DRV", null);
+    d.run();
+  end  
+endmodule
+```
+### Simulation
+
+![alt text](<Simulation Results/7.Other Working Macros.png>)
 
 </details>
+
+_________________________________________________________________________
+
+<details><summary><b>8.Changing severity of Macros</b></summary><br>
+
+### Code
+
+```systemverilog
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+ 
+//////////////////////////////////////////////////
+class driver extends uvm_driver;
+  `uvm_component_utils(driver)
+  
+  function new(string path , uvm_component parent);
+    super.new(path, parent);
+  endfunction 
+  
+  task run();
+    `uvm_info("DRV", "Informational Message", UVM_NONE);
+    `uvm_warning("DRV", "Potential Error");
+    `uvm_error("DRV", "Real Error");
+     #10;
+    `uvm_fatal("DRV", "Simulation cannot continue");
+    #10
+    `uvm_fatal("DRV1", "Simulation Cannot Continue");
+  endtask
+  
+ 
+  
+endclass
+ 
+/////////////////////////////////////////////
+ 
+ 
+module tb;
+  driver d;
+  
+  initial begin
+    d = new("DRV", null);
+    d.set_report_severity_id_override(UVM_FATAL,"DRV", UVM_ERROR);
+    d.run();
+  end  
+endmodule
+```
+### Simulation
+
+![alt text](<Simulation Results/8.Changing severity of Macros.png>)
+
+</details>
+
+_________________________________________________________________________
