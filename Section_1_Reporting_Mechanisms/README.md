@@ -200,7 +200,7 @@ _____________________________________________________________________
 <details>
  <summary><b>6.Working with Hierarchy</b></summary><br>
 
-From tb_top , we can set verbosity level of reporting macros for an entire heriarchy of classes.
+From tb_top , we can set verbosity level of reporting macros for an entire heirarchy of classes.
 
 ### Code
 
