@@ -504,7 +504,8 @@ endmodule
 ```
 ### Simulation
 
-
+![alt text](<Simulation Results/10.Working with log file Part1.png>)
+![alt text](<Simulation Results/10.Working with log file Part2.png>)
 
 </details>
 
