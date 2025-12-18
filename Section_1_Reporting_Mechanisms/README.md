@@ -382,3 +382,131 @@ endmodule
 </details>
 
 _____________________________________________________________________
+
+<details><summary><b>9.Changing Associated Action of Macros</b></summary><br>
+
+### Code
+
+```systemverilog
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+ 
+//////////////////////////////////////////////////
+class driver extends uvm_driver;
+  `uvm_component_utils(driver)
+  
+  function new(string path , uvm_component parent);
+    super.new(path, parent);
+  endfunction
+ 
+ 
+  
+  
+  task run();
+    `uvm_info("DRV", "Informational Message", UVM_NONE);
+    `uvm_warning("DRV", "Potential Error");
+    `uvm_error("DRV", "Real Error"); ///uvm_count
+    `uvm_error("DRV", "Second Real Error");
+    
+     #10;
+    `uvm_fatal("DRV", "Simulation cannot continue DRV1"); /// uvm_exit
+    #10;
+    `uvm_fatal("DRV1", "Simulation Cannot Continue DRV1");
+   
+  endtask
+  
+ 
+  
+endclass
+ 
+/////////////////////////////////////////////
+ 
+ 
+module tb;
+  driver d;
+  
+  initial begin
+    d = new("DRV", null);
+    d.set_report_max_quit_count(3);
+ 
+    d.run();
+  end
+    
+endmodule
+```
+### Simulation
+
+![alt text](<Simulation Results/9.Changing Associated Action of Macros.png>)
+
+</details>
+
+_____________________________________________________________________
+
+<details><summary><b>10.Working with log file</b></summary><br>
+
+### Code
+
+```systemverilog
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+ 
+//////////////////////////////////////////////////
+class driver extends uvm_driver;
+  `uvm_component_utils(driver)
+  
+  function new(string path , uvm_component parent);
+    super.new(path, parent);
+  endfunction
+ 
+ 
+  
+  
+  task run();
+    `uvm_info("DRV", "Informational Message", UVM_NONE);
+    `uvm_warning("DRV", "Potential Error");
+    `uvm_error("DRV", "Real Error"); 
+    `uvm_error("DRV", "Second Real Error");
+  endtask
+  
+ 
+  
+endclass
+ 
+/////////////////////////////////////////////
+ 
+ 
+module tb;
+  driver d;
+  int file;
+  
+  initial begin
+    file = $fopen("log.txt", "w");
+    d = new("DRV", null);
+    d.set_report_default_file(file);
+   
+    //we want UVM_ERROR, UVM_INFO , UVM_WARNING to behave like UVM_LOG and UVM_DISPLAY actions
+    d.set_report_severity_action(UVM_ERROR, file); //to save only UVM_ERROR into the file 
+    d.set_report_severity_action(UVM_ERROR, UVM_DISPLAY | UVM_LOG);
+    
+    /*
+    d.set_report_severity_action(UVM_INFO, UVM_DISPLAY | UVM_LOG);
+    d.set_report_severity_action(UVM_WARNING, UVM_DISPLAY | UVM_LOG);
+    
+ 	*/
+    
+    d.run();
+    
+    #10;
+    $fclose(file);
+  end
+  
+endmodule
+```
+### Simulation
+
+
+
+</details>
+
+_____________________________________________________________________
+
