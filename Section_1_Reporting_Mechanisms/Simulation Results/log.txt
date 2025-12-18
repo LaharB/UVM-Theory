@@ -1,0 +1,2 @@
+UVM_ERROR /home/runner/testbench.sv(18) @ 0: DRV [DRV] Real Error
+UVM_ERROR /home/runner/testbench.sv(19) @ 0: DRV [DRV] Second Real Error
