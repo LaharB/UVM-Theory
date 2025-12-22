@@ -47,6 +47,8 @@ __________________________________________________________
 <details>
  <summary><b>12.Using field macros P1 INT continued</b></summary><br>
 
+UVM_NOPRINT usage demonstratation.We can observe that the value of b is not printed in the console.
+
 ### Code
 
 ```systemverilog 
