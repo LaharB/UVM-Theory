@@ -789,6 +789,99 @@ endmodule
 
 __________________________________________________________________
 
+<details>
+ <summary><b>16.Copy and Clone Method</b></summary><br>
+
+### Code
+
+### Copy Method
+
+```systemverilog 
+
+ `include "uvm_macros.svh"
+import uvm_pkg::*;
+
+class first extends uvm_object;
+  
+  rand bit [3:0]data;
+  
+  function new(string path = "first");
+    super.new(path);    
+  endfunction
+  
+  `uvm_object_utils_begin(first)
+  `uvm_field_int(data, UVM_DEFAULT);
+  `uvm_object_utils_end
+ 
+endclass
+//////////////////////////////////////////////////////////////
+
+module tb;
+  /////copy method -> new + copy
+  first f;
+  first s;
+  
+  
+  initial begin
+    f = new("first");   
+    s = new("second");    //need to add contructor for the instance s to copy into s
+    f.randomize();
+    s.copy(f);
+    f.print();
+    s.print();
+  end 
+
+endmodule
+``` 
+### Clone Method
+
+```systemverilog
+ `include "uvm_macros.svh"
+import uvm_pkg::*;
+
+class first extends uvm_object;
+  
+  rand bit [3:0]data;
+  
+  function new(string path = "first");
+    super.new(path);    
+  endfunction
+  
+  `uvm_object_utils_begin(first)
+  `uvm_field_int(data, UVM_DEFAULT);
+  `uvm_object_utils_end
+ 
+endclass
+//////////////////////////////////////////////////////////////
+
+module tb;
+  
+  ///////////clone method -> clone + create 
+  initial begin 
+    f = new("first");   //no constructor needed for instance s
+    f.randomize();
+    //s = f.clone(); //f.clone() returns handle of uvm_object type but handle s is of "first" type so have to use $cast
+    $cast(s, f.clone());
+    f.print;
+    s.print;   
+  end
+  
+endmodule
+```
+### Simulation Result 
+
+Copy Method 
+
+![alt text](<Section_2_Base_classes_P1_UVM_OBJECT/Simulation Results/16.Copy and Clone Method Part 1.png>)
+
+Clone Method
+
+![alt text](<Section_2_Base_classes_P1_UVM_OBJECT/Simulation Results/16.Copy and Clone Method Part 2.png>)
+
+</details>
+
+__________________________________________________________________
+
 
 
 
