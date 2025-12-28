@@ -332,6 +332,9 @@ endclass
 //////////////////////////////////////////////////////////////
 
 module tb;
+
+  first f;
+  first s;
   
   ///////////clone method -> clone + create 
   initial begin 

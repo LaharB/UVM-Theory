@@ -856,7 +856,9 @@ endclass
 
 module tb;
   
-  ///////////clone method -> clone + create 
+  first f;
+  first s;
+  ///////////clone method -> create + clone  
   initial begin 
     f = new("first");   //no constructor needed for instance s
     f.randomize();
