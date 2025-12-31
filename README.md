@@ -957,6 +957,151 @@ endmodule
 
 __________________________________________________________________
 
+<details>
+ <summary><b>18.Copy and Clone Method - deep copy or shallow copy ?</b></summary><br>
+
+### Code
+
+### Copy Method
+
+```systemverilog 
+
+`include "uvm_macros.svh";
+import uvm_pkg::*;
+
+class first extends uvm_object;
+  
+  rand bit [3:0]data;
+  
+  function new(string path = "first");
+    super.new(path);  
+  endfunction
+  
+  `uvm_object_utils_begin(first)
+  `uvm_field_int(data, UVM_DEFAULT);
+  `uvm_object_utils_end
+  
+endclass
+
+///////////////////////////////////////////////
+
+class second extends uvm_object;
+  
+  first f;
+  
+  function new(string path = "second");
+    super.new(path);
+    f = new("first");
+  endfunction
+  
+  `uvm_object_utils_begin(second)
+  `uvm_field_object(f, UVM_DEFAULT);
+  `uvm_object_utils_end
+  
+endclass
+
+//////////////////////////////////////////////
+
+module tb;
+
+  second s1, s2; 
+  
+  initial begin
+    s1 = new("s1");  //always provide instance name as path name 
+    s2 = new("s2");  //no need of constructor for instance s for clone method
+    s1.f.randomize();
+    
+  
+   //copy method - we need a constructor for instace s2 
+    s2.copy(s1);  //deep copy 
+    
+    s1.print();
+    s2.print();
+    
+    s2.f.data = 10;
+    s1.print();
+    s2.print();
+  
+  end 
+  
+endmodule
+``` 
+### Clone Method
+
+```systemverilog
+`include "uvm_macros.svh";
+import uvm_pkg::*;
+
+class first extends uvm_object;
+  
+  rand bit [3:0]data;
+  
+  function new(string path = "first");
+    super.new(path);  
+  endfunction
+  
+  `uvm_object_utils_begin(first)
+  `uvm_field_int(data, UVM_DEFAULT);
+  `uvm_object_utils_end
+  
+endclass
+
+///////////////////////////////////////////////
+
+class second extends uvm_object;
+  
+  first f;
+  
+  function new(string path = "second");
+    super.new(path);
+    f = new("first");
+  endfunction
+  
+  `uvm_object_utils_begin(second)
+  `uvm_field_object(f, UVM_DEFAULT);
+  `uvm_object_utils_end
+  
+endclass
+
+//////////////////////////////////////////////
+
+module tb;
+
+  second s1, s2;   
+  
+  initial begin
+    s1 = new("s1");  //always provide instance name as path name 
+    //s2 = new("s2");  //no need of constructor for instance s for clone method
+    s1.f.randomize();
+    
+    //clone method - no need of constructor for instance s2
+    $cast(s2, s1.clone());
+    
+    s1.print();
+    s2.print();
+    
+    s2.f.data = 15;
+    s1.print();
+    s2.print();
+    
+  end 
+  
+endmodule 
+
+```
+### Simulation Result 
+
+Copy Method 
+
+![alt text](<Section_2_Base_classes_P1_UVM_OBJECT/Simulation Results/18.Copy and Clone Method Part 1.png>)
+
+Clone Method
+
+![alt text](<Section_2_Base_classes_P1_UVM_OBJECT/Simulation Results/18.Copy and Clone Method Part 2.png>)
+
+</details>
+
+__________________________________________________________________
 
 
 
