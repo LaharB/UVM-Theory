@@ -577,6 +577,8 @@ Clone Method
 
 ![alt text](<Simulation Results/18.Copy and Clone Method Part 2.png>)
 
+We can observe that copy and clone method performs a deep copy for nested object class
+
 </details>
 
 __________________________________________________________________
