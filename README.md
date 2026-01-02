@@ -1155,6 +1155,8 @@ endmodule
 
 ![alt text](<Section_2_Base_classes_P1_UVM_OBJECT/Simulation Results/19.Compare Method.png>)
 
+The copy method uses automation and directly allows to copy the contents of one object into another. 
+
 </details>
 
 __________________________________________________________________
