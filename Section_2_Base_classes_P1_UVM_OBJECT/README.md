@@ -633,6 +633,8 @@ endmodule
 
 ![alt text](<Simulation Results/19.Compare Method.png>)
 
+The copy method uses automation and directly allows to copy the contents of one object into another. 
+
 </details>
 
 __________________________________________________________________
