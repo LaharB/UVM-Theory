@@ -687,6 +687,6 @@ endmodule
 ``` 
 ### Simulation Result 
 
-
+![alt text](<Simulation Results/20.Create Method.png>)
 
 </details>
