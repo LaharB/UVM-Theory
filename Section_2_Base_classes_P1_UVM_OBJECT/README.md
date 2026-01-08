@@ -780,3 +780,57 @@ endmodule
 
 __________________________________________________________________
 
+<details>
+ <summary><b>22.do_print method</b></summary><br>
+
+### Code
+
+```systemverilog 
+`include "uvm_macros.svh"
+import uvm_pkg::* ;
+
+class obj extends uvm_object;
+  //need to register the class to factory while using DO METHOD
+  `uvm_object_utils(obj)
+  
+  function new(string path = "obj");
+    super.new(path);
+  endfunction
+  
+  ///no need to register data members with factory while using DO METHOD
+  //need to do it using CORE METHOD
+  bit [3:0]a = 4;    
+  string b = "UVM";
+  real c = 9.11;
+  
+  virtual function void do_print(uvm_printer printer);
+    super.do_print(printer);
+    
+    printer.print_field_int("a", a, $bits(a), UVM_HEX);
+    printer.print_string("b", b);
+    printer.print_real("c", c);
+  endfunction
+  
+endclass
+
+module tb;
+
+  obj o;
+  
+  initial begin
+    
+    o = obj::type_id::create("o");
+    o.print();
+    
+  end 
+  
+endmodule
+``` 
+### Simulation Result 
+
+![alt text](<Simulation Results/22.do_print method.png>)
+
+</details>
+
+__________________________________________________________________
+
