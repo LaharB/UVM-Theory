@@ -1,4 +1,4 @@
-# Section 2 : UVM Base Classes P2 : UVM_COMPONENT
+# Section 3 : UVM Base Classes P2 : UVM_COMPONENT
 
 <details>
  <summary><b>26.Creating UVM Component</b></summary><br>
