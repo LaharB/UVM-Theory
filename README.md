@@ -1984,7 +1984,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Section_3_Base_classes_P2_UVM_COMPONENT/Simulation Results/29.Use case of config_db.png>)
+![alt text](<Section_3_Base_classes_P2_UVM_COMPONENT/Simulation Results/30.How to override phases.png>)
 
 </details>
 
