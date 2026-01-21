@@ -2076,7 +2076,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/31.Execution of build_phase in multiple components.png>)
+![alt text](<Section_3_Base_classes_P2_UVM_COMPONENT/Simulation Results/31.Execution of build_phase in multiple components.png>)
 
 </details>
 
