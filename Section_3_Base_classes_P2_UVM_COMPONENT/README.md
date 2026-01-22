@@ -351,6 +351,8 @@ __________________________________________________________
 <details>
  <summary><b>30.How to override phases</b></summary><br>
 
+Only Build phase executes in top to bottom fashion.
+
 ### Code
 
 ```systemverilog 
@@ -535,47 +537,48 @@ __________________________________________________________
 <details>
  <summary><b>32.Understanding execution of connect phase</b></summary><br>
 
+Connect phase and the other phases execute in bottom to top fashion.
+
 ### Code
 
 ```systemverilog 
 `include "uvm_macros.svh"
 import uvm_pkg::*;
 
-//only build_phase executes in top_down fashion rest all in botom_top fashion
-
+////connect_phase executes in bottom_top fashion
 class driver extends uvm_driver;
-  `uvm_component_utils(driver)
+  `uvm_component_utils(driver)  
   
   function new(string path = "driver", uvm_component parent = null);
     super.new(path, parent);
   endfunction
   
-  function void build_phase(uvm_phase phase);
-    super.build_phase(phase);
-    `uvm_info("driver", "Driver Build Phase Executed", UVM_NONE);
+  function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    `uvm_info("driver", "Driver Connect Phase Executed", UVM_NONE);   
   endfunction
   
 endclass
-//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 class monitor extends uvm_monitor;
-  `uvm_component_utils(monitor)
+  `uvm_component_utils(monitor)  
   
   function new(string path = "monitor", uvm_component parent = null);
     super.new(path, parent);
   endfunction
   
-  function void build_phase(uvm_phase phase);
-    super.build_phase(phase);
-    `uvm_info("monitor", "Monitor Build Phase Executed", UVM_NONE);
+  function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    `uvm_info("monitor", "Monitor Connect Phase Executed", UVM_NONE);   
   endfunction
   
 endclass
-//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 class env extends uvm_env;
   `uvm_component_utils(env)
   
-  driver drv;  
-  monitor mon;
+  driver d;
+  monitor m;
   
   function new(string path = "env", uvm_component parent = null);
     super.new(path, parent);
@@ -583,17 +586,21 @@ class env extends uvm_env;
   
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    `uvm_info("env", "Env Build Phase Executed", UVM_NONE);
-    drv = driver::type_id::create("drv", this);
-    mon = monitor::type_id::create("mon", this);
+    d = driver::type_id::create("d", this);
+    m = monitor::type_id::create("m", this);
+  endfunction
+  
+  function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    `uvm_info("env", "Env Connect Phase Executed", UVM_NONE);   
   endfunction
   
 endclass
-//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 class test extends uvm_test;
   `uvm_component_utils(test)
   
-  env e;  
+  env e;
   
   function new(string path = "test", uvm_component parent = null);
     super.new(path, parent);
@@ -601,18 +608,21 @@ class test extends uvm_test;
   
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    `uvm_info("test", "Test Build Phase Executed", UVM_NONE);
-    e = env::type_id::create("e", this);   
+    e = env::type_id::create("e", this);
+  endfunction
+  
+  function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    `uvm_info("test", "Test Connect Phase Executed", UVM_NONE);   
   endfunction
   
 endclass
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 module tb;
   
   initial begin
     run_test("test");
   end
-  
 endmodule 
 
 ``` 
