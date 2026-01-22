@@ -628,7 +628,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/31.Execution of build_phase in multiple components.png>)
+![alt text](<Simulation Results/32.Understanding execution of connect phase.png>)
 
 </details>
 
