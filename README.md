@@ -2181,7 +2181,225 @@ endmodule
 </details>
 __________________________________________________________
 
+<details>
+ <summary><b>33.Execution of multiple instance phases</b></summary><br>
 
+### Code 1
+
+```systemverilog 
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+
+////connect_phase executes in bottom_top fashion
+class driver extends uvm_driver;
+  `uvm_component_utils(driver)  
+  
+  function new(string path = "driver", uvm_component parent = null);
+    super.new(path, parent);
+  endfunction
+  
+  function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    `uvm_info("driver", "Driver Connect Phase Executed", UVM_NONE);   
+  endfunction
+  
+endclass
+//////////////////////////////////////////////////////////////////////
+class monitor extends uvm_monitor;
+  `uvm_component_utils(monitor)  
+  
+  function new(string path = "monitor", uvm_component parent = null);
+    super.new(path, parent);
+  endfunction
+  
+  function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    `uvm_info("monitor", "Monitor Connect Phase Executed", UVM_NONE);   
+  endfunction
+  
+endclass
+//////////////////////////////////////////////////////////////////////
+class env extends uvm_env;
+  `uvm_component_utils(env)
+  
+  driver d;
+  monitor m;
+  
+  function new(string path = "env", uvm_component parent = null);
+    super.new(path, parent);
+  endfunction
+
+//whose build_phase and connect_phase - driver's or monitor's will get executed first ?
+// it follows Lexicographic order i.e. lower ASCII values gets first priority
+// BUT while using small letters for instance and path name , priority according alphabetical order 
+
+  function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    
+    //driver build_phase gets executed first then monitor build_phase
+    d = driver::type_id::create("d", this);  //path name should be same as instance name
+    m = monitor::type_id::create("m", this); //path name should be same as instance name
+  endfunction
+ 
+  
+  /*
+  //name driver instance's path name as m and monitor's as d 
+  //monitor connect_phase gets executed first then driver connect_phase
+  d = driver::type_id::create("m", this);  //path name should be same as instance name
+  m = monitor::type_id::create("d", this); //path name should be same as instance name
+  endfunction
+  */
+  
+  function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    `uvm_info("env", "Env Connect Phase Executed", UVM_NONE);   
+  endfunction
+  
+endclass
+//////////////////////////////////////////////////////////////////////
+class test extends uvm_test;
+  `uvm_component_utils(test)
+  
+  env e;
+  
+  function new(string path = "test", uvm_component parent = null);
+    super.new(path, parent);
+  endfunction
+  
+  function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    e = env::type_id::create("e", this);
+  endfunction
+  
+  function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    `uvm_info("test", "Test Connect Phase Executed", UVM_NONE);   
+  endfunction
+  
+endclass
+////////////////////////////////////////////////////////////////////
+module tb;
+  
+  initial begin
+    run_test("test");
+  end
+endmodule 
+``` 
+### Code 2
+
+```systemverilog
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+
+////connect_phase executes in bottom_top fashion
+class driver extends uvm_driver;
+  `uvm_component_utils(driver)  
+  
+  function new(string path = "driver", uvm_component parent = null);
+    super.new(path, parent);
+  endfunction
+  
+  function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    `uvm_info("driver", "Driver Connect Phase Executed", UVM_NONE);   
+  endfunction
+  
+endclass
+//////////////////////////////////////////////////////////////////////
+class monitor extends uvm_monitor;
+  `uvm_component_utils(monitor)  
+  
+  function new(string path = "monitor", uvm_component parent = null);
+    super.new(path, parent);
+  endfunction
+  
+  function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    `uvm_info("monitor", "Monitor Connect Phase Executed", UVM_NONE);   
+  endfunction
+  
+endclass
+//////////////////////////////////////////////////////////////////////
+class env extends uvm_env;
+  `uvm_component_utils(env)
+  
+  driver d;
+  monitor m;
+  
+  function new(string path = "env", uvm_component parent = null);
+    super.new(path, parent);
+  endfunction
+
+//whose build_phase and connect_phase - driver's or monitor's will get executed first ?
+// it follows Lexicographic order i.e. lower ASCII values gets first priority
+// BUT while using small letters for instance and path name , priority according alphabetical order 
+
+  function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    /*
+    //driver build_phase gets executed first then monitor build_phase
+    d = driver::type_id::create("d", this);  //path name should be same as instance name
+    m = monitor::type_id::create("m", this); //path name should be same as instance name
+  endfunction
+ */
+  
+  
+  //name driver instance's path name as m and monitor's as d 
+  //monitor connect_phase gets executed first then driver connect_phase
+  d = driver::type_id::create("m", this);  //path name should be same as instance name
+  m = monitor::type_id::create("d", this); //path name should be same as instance name
+  endfunction
+  
+  
+  function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    `uvm_info("env", "Env Connect Phase Executed", UVM_NONE);   
+  endfunction
+  
+endclass
+//////////////////////////////////////////////////////////////////////
+class test extends uvm_test;
+  `uvm_component_utils(test)
+  
+  env e;
+  
+  function new(string path = "test", uvm_component parent = null);
+    super.new(path, parent);
+  endfunction
+  
+  function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    e = env::type_id::create("e", this);
+  endfunction
+  
+  function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    `uvm_info("test", "Test Connect Phase Executed", UVM_NONE);   
+  endfunction
+  
+endclass
+////////////////////////////////////////////////////////////////////
+module tb;
+  
+  initial begin
+    run_test("test");
+  end
+endmodule 
+```
+
+### Simulation Result 
+
+Using d for driver and m for monitor so driver connect phase gets executed first then monitor's.
+
+![alt text](<Simulation Results/33.Execution of multiple instance phases P1.png>)
+
+Using d for monitor and m for driver so monitor connect phase gets executed first then driver's.
+
+![alt text](<Simulation Results/33.Execution of multiple instance phases P2.png>)
+
+</details>
+
+__________________________________________________________
 
 </details>
 
