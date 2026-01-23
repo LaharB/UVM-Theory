@@ -635,9 +635,7 @@ endmodule
 __________________________________________________________
 
 <details>
- <summary><b>32.Understanding execution of connect phase</b></summary><br>
-
-Connect phase and the other phases execute in bottom to top fashion.
+ <summary><b>33.Execution of multiple instance phases</b></summary><br>
 
 ### Code
 
@@ -683,12 +681,27 @@ class env extends uvm_env;
   function new(string path = "env", uvm_component parent = null);
     super.new(path, parent);
   endfunction
-  
+
+//whose build_phase and connect_phase - driver's or monitor's will get executed first ?
+// it follows Lexicographic order i.e. lower ASCII values gets first priority
+// BUT while using small letters for instance and path name , priority according alphabetical order 
+
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    d = driver::type_id::create("d", this);
-    m = monitor::type_id::create("m", this);
+    
+    //driver build_phase gets executed first then monitor build_phase
+    d = driver::type_id::create("d", this);  //path name should be same as instance name
+    m = monitor::type_id::create("m", this); //path name should be same as instance name
   endfunction
+ 
+  
+  /*
+  //name driver instance's path name as m and monitor's as d 
+  //monitor connect_phase gets executed first then driver connect_phase
+  d = driver::type_id::create("m", this);  //path name should be same as instance name
+  m = monitor::type_id::create("d", this); //path name should be same as instance name
+  endfunction
+  */
   
   function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
@@ -724,7 +737,6 @@ module tb;
     run_test("test");
   end
 endmodule 
-
 ``` 
 ### Simulation Result 
 
