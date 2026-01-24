@@ -860,7 +860,36 @@ __________________________________________________________
 ### Code
 
 ```systemverilog 
+`include "uvm_macros.svh"
+import uvm_pkg::*;
 
+class comp extends uvm_component;
+  `uvm_component_utils(comp)
+  
+  function new(string path = "comp", uvm_component parent);
+    super.new(path, parent);
+  endfunction
+  
+//use a run_phase - eg lets use reset_phase
+  task reset_phase(uvm_phase phase);
+//to hold the simulator till this task is completed, we use raise and drop objection
+    phase.raise_objection(this); // "this" -> run_phase has raised objection
+    `uvm_info("comp", "Reset Started", UVM_NONE);
+    #10;
+    `uvm_info("comp", "Reset Completed", UVM_NONE);
+    phase.drop_objection(this); 
+    
+  endtask
+  
+endclass
+
+module tb;
+  
+  initial begin
+    run_test("comp");
+  end 
+  
+endmodule 
 ``` 
 ### Simulation Result 
 
