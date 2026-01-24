@@ -8,6 +8,8 @@ This repository consists of all the basic concepts and practices required to lea
 - Section 6 : TLM
 - Section 7 : Sequence
 
+_________________________________________________________________
+
 <details><summary><b>Section 1 : UVM Reporting Mechanisms</b></summary>
 ------------------------------------------------------------------
 <details>
@@ -1541,11 +1543,9 @@ endmodule
 
 </details>
 
-__________________________________________________________________
-
 </details>
 
-___________________________________________________________________
+_________________________________________________________________
 
 <details><summary><b>Section 3 : Base Classes Part 2 : UVM_COMPONENT</b></summary>
 ------------------------------------------------------------------
