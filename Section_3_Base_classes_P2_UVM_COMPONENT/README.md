@@ -853,3 +853,19 @@ Using d for monitor and m for driver so monitor connect phase gets executed firs
 </details>
 
 __________________________________________________________
+
+<details>
+ <summary><b>34.Raising Objection</b></summary><br>
+
+### Code
+
+```systemverilog 
+
+``` 
+### Simulation Result 
+
+![alt text](<Simulation Results/32.Understanding execution of connect phase.png>)
+
+</details>
+
+__________________________________________________________
