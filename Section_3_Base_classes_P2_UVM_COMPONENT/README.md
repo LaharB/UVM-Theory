@@ -857,6 +857,8 @@ __________________________________________________________
 <details>
  <summary><b>34.Raising Objection</b></summary><br>
 
+To hold the simulator till this task is completed, we use raise and drop objection.
+
 ### Code
 
 ```systemverilog 
@@ -893,7 +895,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/32.Understanding execution of connect phase.png>)
+![alt text](<Simulation Results/34.Raising Objection.png>)
 
 </details>
 
