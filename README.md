@@ -2499,7 +2499,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/35.How time consuming phases work in a single component.png>)
+![alt text](<Section_3_Base_classes_P2_UVM_COMPONENT/Simulation Results/35.How time consuming phases work in a single component.png>)
 
 </details>
 
