@@ -902,7 +902,7 @@ endmodule
 __________________________________________________________
 
 <details>
- <summary><b>35.How time consuming phases work in a single component</b></summary><br>
+ <summary><b>35.How time consuming phases work in a single component ?</b></summary><br>
 
 ### Code
 
@@ -951,7 +951,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-
+![alt text](<Simulation Results/35.How time consuming phases work in a single component.png>)
 
 </details>
 
