@@ -1076,13 +1076,12 @@ module tb;
   initial begin
     run_test("test");
   end
-  
- 
+   
 endmodule 
 ``` 
 ### Simulation Result 
 
-
+![alt text](<Simulation Results/36.Time consuming phases in multiple components.png>)
 
 </details>
 
