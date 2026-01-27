@@ -1142,7 +1142,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/36.Time consuming phases in multiple components.png>)
+![alt text](<Simulation Results/37.Timeout.png>)
 
 </details>
 
