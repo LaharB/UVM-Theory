@@ -1199,7 +1199,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-
+![alt text](<Simulation Results/38.Drain Time - Individual component.png>)
 
 </details>
 
