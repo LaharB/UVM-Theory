@@ -1325,7 +1325,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/38.Drain Time - Individual component.png>)
+![alt text](<Simulation Results/39.Drain Time - Multiple component.png>)
 
 </details>
 
