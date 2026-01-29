@@ -2753,6 +2753,132 @@ endmodule
 
 __________________________________________________________
 
+<details>
+ <summary><b>39.Drain Time: Multiple component</b></summary><br>
+
+### Code
+
+```systemverilog 
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+
+class driver extends uvm_driver;
+  `uvm_component_utils(driver)
+  
+  function new(string path = "driver", uvm_component parent);
+    super.new(path, parent);
+  endfunction
+  
+  task reset_phase(uvm_phase phase);
+    phase.raise_objection(this);
+    `uvm_info("driver", "Driver Reset Started", UVM_NONE);
+    #100;
+    `uvm_info("driver", "Driver Reset Completed", UVM_NONE);
+	phase.drop_objection(this);   
+  endtask
+           
+  task main_phase(uvm_phase phase);
+    phase.raise_objection(this);
+    `uvm_info("driver", "Driver Main Phase Started", UVM_NONE);
+    #100;
+    `uvm_info("driver", "Driver Main Phase Completed", UVM_NONE);
+	phase.drop_objection(this);   
+  endtask
+  
+  task post_main_phase(uvm_phase phase);
+    `uvm_info("driver", "Driver Post-Main Phase Started", UVM_NONE); 
+  endtask
+  
+endclass
+/////////////////////////////////////////////////////////////////
+class monitor extends uvm_monitor;
+  `uvm_component_utils(monitor)
+  
+  function new(string path = "monitor", uvm_component parent);
+    super.new(path, parent);
+  endfunction
+  
+  task reset_phase(uvm_phase phase);
+    phase.raise_objection(this);
+    `uvm_info("monitor", "Monitor Reset Started", UVM_NONE);
+    #150;
+    `uvm_info("monitor", "Monitor Reset Completed", UVM_NONE);
+	phase.drop_objection(this);   
+  endtask
+           
+  task main_phase(uvm_phase phase);
+    phase.raise_objection(this);
+    `uvm_info("monitor", "Monitor Main Phase Started", UVM_NONE);
+    #200;
+    `uvm_info("monitor", "Monitor Main Phase Completed", UVM_NONE);
+	phase.drop_objection(this);   
+  endtask
+  
+  task post_main_phase(uvm_phase phase);
+    `uvm_info("monitor", "Monitor Post-Main Phase Started", UVM_NONE); 
+  endtask
+  
+endclass
+/////////////////////////////////////////////////////////////////
+class env extends uvm_env;
+  `uvm_component_utils(env)
+  
+  function new(string path = "monitor", uvm_component parent);
+    super.new(path, parent);
+  endfunction
+  
+  driver d;
+  monitor m;
+  
+  function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    d = driver::type_id::create("d", this);
+    m = monitor::type_id::create("m", this);
+  endfunction
+  
+endclass
+////////////////////////////////////////////////////////////////
+class test extends uvm_test;
+  `uvm_component_utils(test)
+  
+  function new(string path = "test", uvm_component parent);
+    super.new(path, parent);
+  endfunction
+  
+  env e;
+  
+  function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    e = env::type_id::create("e", this);  
+  endfunction
+  
+  //drain_time should always be set from end_of_elaboration_phase
+  function void end_of_elaboration_phase(uvm_phase phase);
+    uvm_phase main_phase;   //variable "main_phase" of type "uvm_phase"
+    super.end_of_elaboration_phase(phase);
+    main_phase = phase.find_by_name("main",0); //to get access to main_phases of all the components
+    main_phase.phase_done.set_drain_time(this, 100);
+  endfunction
+ 
+endclass
+
+////////////////////////////////////////////////////////////////
+module tb;
+  
+  initial begin
+    run_test("test");
+  end 
+  
+endmodule 
+``` 
+### Simulation Result 
+
+![alt text](<Section_3_Base_classes_P2_UVM_COMPONENT/Simulation Results/39.Drain Time - Multiple component.png>)
+
+</details>
+
+__________________________________________________________
+
 
 
 </details>
