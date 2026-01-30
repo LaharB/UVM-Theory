@@ -1334,7 +1334,7 @@ __________________________________________________________
 <details>
  <summary><b>40.Phase Debug Switch</b></summary><br>
 
-We have to the commands in run options to see the debug report:
+We have to use the commands in run options to see the phase trace and objection trace report:
 +UVM_PHASE_TRACE
 +UVM_OBJECTION_TRACE
 
