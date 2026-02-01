@@ -2996,7 +2996,7 @@ endmodule
 
 ### +UVM_OBJECTION_TRACE
 
-![alt text](<Simulation Results/41.Objection Debug Switch.png>)
+![alt text](<Section_3_Base_classes_P2_UVM_COMPONENT/Simulation Results/41.Objection Debug Switch.png>)
 
 </details>
 
