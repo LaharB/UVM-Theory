@@ -1334,9 +1334,8 @@ __________________________________________________________
 <details>
  <summary><b>40.Phase Debug Switch</b></summary><br>
 
-We have to use the commands in run options to see the phase trace and objection trace report:
+We have to use the command in run options to see the phase trace report:
 +UVM_PHASE_TRACE
-+UVM_OBJECTION_TRACE
 
 ### Code
 
@@ -1391,6 +1390,63 @@ endmodule
 ### +UVM_OBJECTION_TRACE
 
 ![alt text](<Simulation Results/40.Phase Debug Switch P2 - UVM_OBJECTION_TRACE.png>)
+
+</details>
+
+__________________________________________________________
+
+<details>
+ <summary><b>41.Objection Debug Switch</b></summary><br>
+
+We have to use the command in run options to see the phase trace report:
++UVM_OBJECTION_TRACE
+
+### Code
+
+```systemverilog 
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+ 
+class comp extends uvm_component;
+  `uvm_component_utils(comp)
+
+  function new(string path = "comp", uvm_component parent = null);
+    super.new(path, parent);
+  endfunction
+  
+  task reset_phase(uvm_phase phase);
+    phase.raise_objection(this);
+    `uvm_info("comp","Reset Applied", UVM_NONE);
+     #100;
+    `uvm_info("comp","Reset Removed", UVM_NONE);
+    phase.drop_objection(this);
+  endtask
+  
+  task main_phase(uvm_phase phase);
+    phase.raise_objection(this);
+    `uvm_info("comp", "Random Stimulus Applied", UVM_NONE);
+    #500;
+    `uvm_info("comp", "Random Stimulus Removed", UVM_NONE);
+    phase.drop_objection(this);
+  endtask
+  
+endclass
+ 
+///////////////////////////////////////////////////////////////////////////
+module tb;
+  
+  initial begin
+    run_test("comp");
+  end
+  
+ 
+endmodule 
+``` 
+### Simulation Result 
+
+### +UVM_OBJECTION_TRACE
+
+![alt text](<Simulation Results/41.Objection Debug Switch.png>)
 
 </details>
 
