@@ -3099,12 +3099,9 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/42.Blocking PUT operation part 1.png>)
+![alt text](<Section_3_Base_classes_P2_UVM_COMPONENT/Simulation Results/42.Blocking PUT operation part 1.png>)
 
 </details>
-
-__________________________________________________________
-
 
 </details>
 
