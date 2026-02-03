@@ -1453,7 +1453,7 @@ endmodule
 __________________________________________________________
 
 <details>
- <summary><b>42.Blocking PUT operation part 1</b></summary><br>
+ <summary><b>42.Blocking PUT operation</b></summary><br>
 
 This code will give error because export is not the point where a transaction ends and there is no proper method inside port or export to send the data , it is done by "implementation".
 
