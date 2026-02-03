@@ -3256,7 +3256,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<../Section_6_TLM/Simulation Results/42.Blocking PUT operation part 1.png>)
+![alt text](<Section_6_TLM/Simulation Results/42.Blocking PUT operation part 1.png>)
 
 </details>
 
@@ -3368,7 +3368,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<../Section_6_TLM/Simulation Results/43.Adding IMP to Blocking PUT operation.png>)
+![alt text](<Section_6_TLM/Simulation Results/43.Adding IMP to Blocking PUT operation.png>)
 
 </details>
 
