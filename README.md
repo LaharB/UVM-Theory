@@ -3372,6 +3372,120 @@ endmodule
 
 </details>
 
+________________________________________________________________
+
+<details>
+ <summary><b>44.Port to IMP</b></summary><br>
+
+### Code
+
+```systemverilog 
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+ 
+class producer extends uvm_component;
+  `uvm_component_utils(producer)
+  
+  int data = 12;
+  
+  uvm_blocking_put_port #(int) send;
+  
+  function new(input string path = "producer", uvm_component parent = null);
+    super.new(path, parent);
+  endfunction
+  
+  virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    send  = new("send", this);
+  endfunction
+  //task for using a put method 
+  task main_phase(uvm_phase phase);
+    phase.raise_objection(this);
+   `uvm_info("PROD", $sformatf("Data Sent : %0d", data), UVM_NONE); 
+    send.put(data);
+    phase.drop_objection(this);
+ endtask
+
+endclass
+////////////////////////////////////////////////
+ 
+class consumer extends uvm_component;
+  `uvm_component_utils(consumer)
+  
+  uvm_blocking_put_imp #(int, consumer) imp; //2 arguments - data type of the data beinf sent and the class to which put method is being mentioned
+  function new(input string path = "consumer", uvm_component parent = null);
+    super.new(path, parent);
+  endfunction
+  
+  virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    imp  = new("imp", this);
+  endfunction
+  
+  //function to display data received 
+  function void put(int datar);
+    `uvm_info("Cons", $sformatf("Data Rcvd : %0d", datar), UVM_NONE);
+  endfunction
+  
+endclass
+///////////////////////////////////////////////////////////////////////
+class env extends uvm_env;
+ `uvm_component_utils(env)
+ 
+ producer p;
+ consumer c;
+ 
+  function new(input string path = "env", uvm_component parent = null);
+    super.new(path, parent);
+  endfunction
+ 
+  virtual function void build_phase(uvm_phase phase);
+   super.build_phase(phase);
+   p = producer::type_id::create("p",this);
+   c = consumer::type_id::create("c", this);
+  endfunction
+ 
+  virtual function void connect_phase(uvm_phase phase);
+   super.connect_phase(phase);
+   p.send.connect(c.imp);
+  endfunction
+  
+endclass
+ 
+///////////////////////////////////////////////////
+class test extends uvm_test;
+`uvm_component_utils(test)
+ 
+ env e;
+ 
+  function new(input string path = "test", uvm_component parent = null);
+   super.new(path, parent);
+ endfunction
+ 
+ virtual function void build_phase(uvm_phase phase);
+  super.build_phase(phase);
+  e = env::type_id::create("e",this);
+ endfunction
+  
+endclass
+////////////////////////////////////////////////////////////////////
+module tb;
+  
+  initial begin
+    run_test("test");
+  end
+  
+endmodule 
+``` 
+### Simulation Result 
+
+![alt text](<Section_6_TLM/Simulation Results/44.Port to IMP.png>)
+
+</details>
+
+__________________________________________________________
+
+
 </details>
 
 _______________________________________________________________
