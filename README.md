@@ -3624,7 +3624,7 @@ endmodule
 
 ![alt text](<Section_6_TLM/Simulation Results/45.Port-Port to IMP Part 1.png>)
 
-![alt text](<Simulation Results/45.Port-Port to IMP Part 2.png>)
+![alt text](<Section_6_TLM/Simulation Results/45.Port-Port to IMP Part 2.png>)
 
 </details>
 
