@@ -3764,9 +3764,9 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/46.Port to Export-IMP Part 1.png>)
+![alt text](<Section_6_TLM/Simulation Results/46.Port to Export-IMP Part 1.png>)
 
-![alt text](<Simulation Results/46.Port to Export-IMP Part 2.png>)
+![alt text](<Section_6_TLM/Simulation Results/46.Port to Export-IMP Part 2.png>)
 
 </details>
 
