@@ -747,7 +747,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-
+![alt text](<Simulation Results/47.Get Operation.png>)
 
 </details>
 
