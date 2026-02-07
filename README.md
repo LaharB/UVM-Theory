@@ -3884,7 +3884,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/47.Get Operation.png>)
+![alt text](<Section_6_TLM/Simulation Results/47.Get Operation.png>)
 
 </details>
 
