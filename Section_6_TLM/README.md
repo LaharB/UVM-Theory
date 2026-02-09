@@ -740,13 +740,16 @@ __________________________________________________________
 ```systemverilog 
 `include "uvm_macros.svh"
 import uvm_pkg::*;
- 
+////////////////////////////////////////////////////////////////////
 class producer extends uvm_component;
-  `uvm_component_utils(producer)
-  
-  uvm_blocking_get_port #(int) port;
-  
-  int data = 0; //variable to store the data that we receive from consumer
+ `uvm_component_utils(producer)
+
+//Two arguments for transport port -
+//1.Datatype to be sent 2.Datatype to be received
+  uvm_blocking_transport_port #(int, int) port;
+
+  int datas = 12;  //data to be sent 
+  int datar = 0;   //variable to store the data received
   
   function new(input string path = "producer", uvm_component parent = null);
     super.new(path, parent);
@@ -754,93 +757,89 @@ class producer extends uvm_component;
   
   virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    port   = new("port", this);
+    port = new("port", this);
   endfunction
   
-  //task to get the data from consumer
+  //main_phase
   task main_phase(uvm_phase phase);
     phase.raise_objection(this);
-    port.get(data);  //get method 
-    `uvm_info("PROD", $sformatf("Data Rcvd : %0d",data), UVM_NONE);
+    port.transport(datas, datar); //calling transport task
+    `uvm_info("PROD", $sformatf("Data Sent : %0d, Data Rcvd : %0d", datas, datar), UVM_NONE);
     phase.drop_objection(this);
   endtask
-
+   
 endclass
-/////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 class consumer extends uvm_component;
   `uvm_component_utils(consumer)
-  
-  int data = 12;
-  
-  uvm_blocking_get_imp#(int, consumer) imp;
+
+//Two arguments for transport port + 1 from implementation port
+  uvm_blocking_transport_imp #(int, int, consumer) imp;
+
+  int datas = 13;  //data to be sent 
+  int datar = 0;   //variable to store the data received
   
   function new(input string path = "consumer", uvm_component parent = null);
     super.new(path, parent);
   endfunction
   
+  virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    imp = new("imp", this);
+  endfunction
+  
+  virtual task transport(input int datar, output int datas);
+   datas = this.datas;
+    `uvm_info("CONS", $sformatf("Data Sent : %0d, Data Rcvd : %0d", datas, datar), UVM_NONE);
+  endtask
+   
+endclass
+//////////////////////////////////////////////////////////////////////////////
+class env extends uvm_env;
+  `uvm_component_utils(env)
+  
+  producer p;
+  consumer c;
+  
+  function new(input string path = "env", uvm_component parent = null);
+    super.new(path, parent);
+  endfunction
   
   virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    imp  = new("imp", this);
+    p = producer::type_id::create("p", this);
+    c = consumer::type_id::create("c", this);
   endfunction
   
-  virtual task get(output int datar ); //output as consumer is sending data to producer 
-    `uvm_info("CONS", $sformatf("Data Sent : %0d", data), UVM_NONE);
-    datar = data; //passing the data = 12 to datar which will be sent to producer
-  endtask
-
+  virtual function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    p.port.connect(c.imp);
+  endfunction
+  
 endclass
-///////////////////////////////////////////////////////////////////////////
- 
-class env extends uvm_env;
-`uvm_component_utils(env)
- 
- producer p;
- consumer c;
- 
- 
- function new(input string path = "env", uvm_component parent = null);
-   super.new(path, parent);
- endfunction
- 
- virtual function void build_phase(uvm_phase phase);
-  super.build_phase(phase);
-  c = consumer::type_id::create("c", this);
-  p = producer::type_id::create("p",this);
- endfunction
- 
-  //conencting producer and consumer in env class as env is the parent 
- virtual function void connect_phase(uvm_phase phase);
-  super.connect_phase(phase);
-  p.port.connect(c.imp);
- endfunction
- 
-endclass
- 
-///////////////////////////////////////////////////
- 
+////////////////////////////////////////////////////////////////////////
 class test extends uvm_test;
- `uvm_component_utils(test)
- 
- env e;
- 
- function new(input string path = "test", uvm_component parent = null);
-  super.new(path, parent);
- endfunction
- 
- virtual function void build_phase(uvm_phase phase);
-  super.build_phase(phase);
-  e = env::type_id::create("e",this);
- endfunction
- 
+  `uvm_component_utils(test)
+  
+  env e;
+  
+  function new(input string path = "test", uvm_component parent = null);
+    super.new(path, parent);
+  endfunction
+  
+  virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    e = env::type_id::create("e", this);
+  endfunction
+  
 endclass
-///////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 module tb;
   
- initial begin
-  run_test("test");
- end
- 
+  initial begin
+    run_test("test");
+  end
+  
 endmodule 
 ``` 
 ### Simulation Result 
