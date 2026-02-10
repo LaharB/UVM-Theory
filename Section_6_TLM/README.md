@@ -881,8 +881,7 @@ class producer extends uvm_component;
   port.write(data);
   phase.drop_objection(this);
  endtask
-  
-  
+    
 endclass
 ////////////////////////////////////////////////
  
@@ -905,19 +904,17 @@ class consumer1 extends uvm_component;
   virtual function void write(int datar);
     `uvm_info("CONS1", $sformatf("Data Recv : %0d", datar), UVM_NONE); 
   endfunction
- 
   
 endclass
  
-//////////////////////////////////////////////////////////////////////////////////
-    
-  class consumer2 extends uvm_component;
-    `uvm_component_utils(consumer2)
+/////////////////////////////////////////////////////////////////
+class consumer2 extends uvm_component;
+  `uvm_component_utils(consumer2)
   
   
-    uvm_analysis_imp#(int, consumer2) imp;
+  uvm_analysis_imp#(int, consumer2) imp;
   
-    function new(input string path = "consumer2", uvm_component parent = null);
+  function new(input string path = "consumer2", uvm_component parent = null);
     super.new(path, parent);
   endfunction
   
@@ -930,14 +927,10 @@ endclass
   virtual function void write(int datar);
     `uvm_info("CONS2", $sformatf("Data Recv : %0d", datar), UVM_NONE); 
   endfunction
- 
-  
+   
 endclass  
-    
-        
-    
-    
-/////////////////////////////////////////////////////////////////////////////
+   
+/////////////////////////////////////////////////////////////////
  
 class env extends uvm_env;
 `uvm_component_utils(env)
@@ -963,8 +956,7 @@ super.connect_phase(phase);
   p.port.connect(c1.imp);
   p.port.connect(c2.imp);
 endfunction
- 
- 
+  
 endclass
  
 ///////////////////////////////////////////////////
@@ -983,7 +975,6 @@ virtual function void build_phase(uvm_phase phase);
 super.build_phase(phase);
   e = env::type_id::create("e",this);
 endfunction
- 
  
 endclass
  
