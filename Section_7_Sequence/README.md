@@ -154,12 +154,11 @@ module tb;
     run_test("test");
   end
   
-endmodule
- 
+endmodule 
 ``` 
 ### Simulation Result 
 
-![alt text](<../Section_6_TLM/Simulation Results/42.Blocking PUT operation part 1.png>)
+![alt text](<Simulation Results/50.Creating Sequences.png>)
 
 </details>
 
