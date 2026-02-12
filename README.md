@@ -4009,7 +4009,7 @@ endmodule
 __________________________________________________________
 
 <details>
- <summary><b>49.Analysis Port</b></summary><br>
+ <summary><b>49.Analysis Port</b></summary>
 
 ### Code
 
@@ -4320,7 +4320,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/50.Creating Sequences.png>)
+![alt text](<Section_7_Sequence/Simulation Results/50.Creating Sequences.png>)
 
 </details>
 
