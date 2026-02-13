@@ -1,4 +1,4 @@
-# Section 6 : TLM
+# Section 7 : Sequences
 
 <details>
  <summary><b>50.Creating Sequences</b></summary><br>
