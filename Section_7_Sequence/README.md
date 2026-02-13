@@ -163,3 +163,19 @@ endmodule
 </details>
 
 __________________________________________________________
+
+<details>
+ <summary><b>51.Undestanding Flow</b></summary><br>
+
+### Code
+
+```systemverilog 
+ 
+``` 
+### Simulation Result 
+
+![alt text](<Simulation Results/50.Creating Sequences.png>)
+
+</details>
+
+__________________________________________________________
