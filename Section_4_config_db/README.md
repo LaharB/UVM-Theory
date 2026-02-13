@@ -60,7 +60,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/28.Understanding typical format of config_db.png>)
+![alt text](<Simulation results/28.Understanding typical format of config_db.png>)
 
 </details>
 
