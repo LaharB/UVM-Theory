@@ -2966,7 +2966,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Section_3_Base_classes_P2_UVM_COMPONENT/Simulation Results/28.Understanding typical format of config_db.png>)
+![alt text](<Section_4_config_db/Simulation results/28.Understanding typical format of config_db.png>)
 
 </details>
 
@@ -3104,7 +3104,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Section_3_Base_classes_P2_UVM_COMPONENT/Simulation Results/29.Use case of config_db.png>)
+![alt text](<Section_4_config_db/Simulation results/29.Use case of config_db.png>)
 
 </details>
 
