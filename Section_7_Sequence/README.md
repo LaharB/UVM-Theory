@@ -1,4 +1,4 @@
-# Section 7 : Sequences
+# Section 7 : Sequence
 
 <details>
  <summary><b>50.Creating Sequences</b></summary><br>
