@@ -4467,7 +4467,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/51.Undestanding Flow.png>)
+![alt text](<Section_7_Sequence/Simulation Results/51.Undestanding Flow.png>)
 
 </details>
 
