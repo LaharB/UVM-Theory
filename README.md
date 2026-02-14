@@ -3104,7 +3104,9 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Section_4_config_db/Simulation results/29.Use case of config_db.png>)
+![alt text](<Section_4_config_db/Simulation results/29.Use case of config_db Part 1.png>)
+
+![alt text](<Section_4_config_db/Simulation results/29.Use case of config_db Part 2.png>)
 
 </details>
 
