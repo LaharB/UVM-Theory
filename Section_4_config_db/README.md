@@ -200,6 +200,8 @@ endmodule
 
 ![alt text](<Simulation results/29.Use case of config_db Part 1.png>)
 
+![alt text](<Simulation results/29.Use case of config_db Part 2.png>)
+
 </details>
 
 ___________________________________________________________
