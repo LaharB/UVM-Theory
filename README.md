@@ -4626,7 +4626,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/52.Sending data to sequencer METHOD 1.png>)
+![alt text](<Section_7_Sequence/Simulation Results/52.Sending data to sequencer METHOD 1.png>)
 
 </details>
 
