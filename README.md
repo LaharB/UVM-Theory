@@ -4797,7 +4797,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/53.Sending Data to Driver METHOD 2.png>)
+![alt text](<Section_7_Sequence/Simulation Results/53.Sending Data to Driver METHOD 2.png>)
 
 </details>
 
