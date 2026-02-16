@@ -653,7 +653,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/52.Sending data to sequencer METHOD 1.png>)
+![alt text](<Simulation Results/53.Sending Data to Driver METHOD 2.png>)
 
 </details>
 
