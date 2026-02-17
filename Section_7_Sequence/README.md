@@ -686,7 +686,7 @@ class transaction extends uvm_sequence_item;
   
 endclass
 ////////////////////////////////////////////////////////////////
-//2.sequence
+//2. 1st sequence
 class sequence1 extends uvm_sequence#(transaction);
   `uvm_object_utils(sequence1)
     transaction trans;  //making trans handle
@@ -694,30 +694,43 @@ class sequence1 extends uvm_sequence#(transaction);
   function new(input string path = "sequence1") ; //1 arg as uvm_object
     super.new(path);
   endfunction
-  /*
-  virtual task body();
-    repeat(5)begin
-      `uvm_do(trans); //uvm_do creates the object, randomizes the data and also connects trans to the sequencer
-     end
-  endtask
-  */
+
 //INSTEAD of uvm_do , lets use start_item and finish_item 
   virtual task body();
     //crate trans object
-    repeat(5)begin
      trans = transaction::type_id::create("trans");
+     `uvm_info("SEQ1", "SEQ1 Started", UVM_NONE);
      start_item(trans); //start_item and specify the instance name(here trans) 
-  //start_item sends thr req to driver and has inbuilt wait_for_grant  
-     assert(trans.randomize);
-     finish_item(trans); //finish_item has in-built has wait_for_item_done 
-  //once we get item_done, we do uvm_info
-     `uvm_info("SEQ1", $sformatf("Data Sent: a: %0d b: %0d", trans.a , trans.b), UVM_NONE);
-    end
-    
+  //start_item sends the req to driver and has inbuilt wait_for_grant  
+      trans.randomize();
+     finish_item(trans); //finish_item has in-built has wait_for_item_done
+      `uvm_info("SEQ1", "SEQ1 Ended", UVM_NONE);
   endtask
  
 endclass
 /////////////////////////////////////////////////////////////////////////
+//2. 2nd sequence
+class sequence2 extends uvm_sequence#(transaction);
+  `uvm_object_utils(sequence2)
+    transaction trans;  //making trans handle
+  
+  function new(input string path = "sequence2") ; //1 arg as uvm_object
+    super.new(path);
+  endfunction
+
+//INSTEAD of uvm_do , lets use start_item and finish_item 
+  virtual task body();
+    //crate trans object
+     trans = transaction::type_id::create("trans");
+      `uvm_info("SEQ2", "SEQ2 Started", UVM_NONE);
+     start_item(trans); //start_item and specify the instance name(here trans) 
+  //start_item sends the req to driver and has inbuilt wait_for_grant  
+     trans.randomize();
+     finish_item(trans); //finish_item has in-built has wait_for_item_done
+      `uvm_info("SEQ2", "SEQ2 Ended", UVM_NONE);
+  endtask
+ 
+endclass
 //3.driver
 class driver extends uvm_driver#(transaction);
   `uvm_component_utils(driver)
@@ -728,16 +741,19 @@ class driver extends uvm_driver#(transaction);
     super.new(path, parent);
   endfunction
   
-  //task to set up communication between driver and transaction
+  virtual function void build_phase(uvm_phase phase);
+  	super.build_phase(phase);
+    trans = transaction::type_id::create("trans");
+  endfunction
+  
+  //task to set up communication between driver and sequencer 
   virtual task run_phase(uvm_phase phase);
-   trans = transaction::type_id::create("trans");  //1 arg as belong to uvm_object
     forever begin 
-      seq_item_port.get_next_item(trans); //tell transaction tos end next packet
-      `uvm_info("DRV", $sformatf("Data Rcvd: a: %0d, b: %0d",trans.a, trans.b), UVM_NONE);
+      seq_item_port.get_next_item(trans); //gives grant to sequence
       //////////////////
       //apply seq to DUT 
       //////////////////
-      seq_item_port.item_done();  //send item_done to seq
+      seq_item_port.item_done();  //send item_done to sequence
     end
   endtask
   
@@ -774,7 +790,6 @@ endclass
 class env extends uvm_env;
   `uvm_component_utils(env)
   
-  sequence1 s1;
   agent a;
   
   function new(input string path = "env", uvm_component parent = null);  
@@ -783,24 +798,17 @@ class env extends uvm_env;
   
   virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    s1 = sequence1::type_id::create("s1");  //1 arg as belongs to uvm_object
     a = agent::type_id::create("a", this);
-  endfunction
-  
-  //RUNNING SEQUENCE WITH START METHOD APPROACH 1
-  //task to use start method inside env class intead of test class
-  virtual task run_phase(uvm_phase phase);
-    phase.raise_objection(this);
-      s1.start(a.seqr);   
-    phase.drop_objection(this);
-  endtask
+  endfunction 
 
 endclass
 /////////////////////////////////////////////////////////////////////////////
 //6.test 
 class test extends uvm_test;
   `uvm_component_utils(test)
- 
+  
+  sequence1 s1;
+  sequence2 s2;
   env e;
   
   function new(input string path = "test", uvm_component parent = null);  
@@ -810,7 +818,22 @@ class test extends uvm_test;
   virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
     e = env::type_id::create("e", this);
+    s1 = sequence1::type_id::create("s1");
+    s2 = sequence2::type_id::create("s2");
   endfunction
+  
+  //task to do start method and for sequence get access to sequencer 
+  virtual task run_phase(uvm_phase phase);
+    phase.raise_objection(this);
+    
+    // e.a.seq.set_arbitration(UVM_SEQ_ARB_STRICT_RANDOM); 
+    
+     fork   //using fork join so that all processes happen parallely
+       s1.start(e.a.seqr);
+       s2.start(e.a.seqr); //by default , the access to seqr is FIFO fashion, first to get access gets finished first
+     join
+    phase.drop_objection(this);
+  endtask
   
 endclass
 //////////////////////////////////////////////////////////////////////////////
