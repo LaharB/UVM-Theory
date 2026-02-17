@@ -4803,6 +4803,201 @@ endmodule
 
 __________________________________________________________
 
+<details>
+ <summary><b>54.Multiple Sequnce in Parallel</b></summary><br>
+
+### Code
+
+```systemverilog 
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+///////////////////////////////////////////////////////////////
+//1.transaction
+class transaction extends uvm_sequence_item;
+ rand bit [3:0]a;
+ rand bit [3:0]b;
+      bit [4:0]y;
+  
+ function new(input string path = "transaction");
+   super.new(path);
+ endfunction
+  
+  `uvm_object_utils_begin(transaction);
+  `uvm_field_int(a, UVM_DEFAULT);
+  `uvm_field_int(b, UVM_DEFAULT);
+  `uvm_field_int(y, UVM_DEFAULT);
+  `uvm_object_utils_end
+  
+endclass
+////////////////////////////////////////////////////////////////
+//2. 1st sequence
+class sequence1 extends uvm_sequence#(transaction);
+  `uvm_object_utils(sequence1)
+    transaction trans;  //making trans handle
+  
+  function new(input string path = "sequence1") ; //1 arg as uvm_object
+    super.new(path);
+  endfunction
+
+//INSTEAD of uvm_do , lets use start_item and finish_item 
+  virtual task body();
+    //crate trans object
+     trans = transaction::type_id::create("trans");
+     `uvm_info("SEQ1", "SEQ1 Started", UVM_NONE);
+     start_item(trans); //start_item and specify the instance name(here trans) 
+  //start_item sends the req to driver and has inbuilt wait_for_grant  
+      trans.randomize();
+     finish_item(trans); //finish_item has in-built has wait_for_item_done
+      `uvm_info("SEQ1", "SEQ1 Ended", UVM_NONE);
+  endtask
+ 
+endclass
+/////////////////////////////////////////////////////////////////////////
+//2. 2nd sequence
+class sequence2 extends uvm_sequence#(transaction);
+  `uvm_object_utils(sequence2)
+    transaction trans;  //making trans handle
+  
+  function new(input string path = "sequence2") ; //1 arg as uvm_object
+    super.new(path);
+  endfunction
+
+//INSTEAD of uvm_do , lets use start_item and finish_item 
+  virtual task body();
+    //crate trans object
+     trans = transaction::type_id::create("trans");
+      `uvm_info("SEQ2", "SEQ2 Started", UVM_NONE);
+     start_item(trans); //start_item and specify the instance name(here trans) 
+  //start_item sends the req to driver and has inbuilt wait_for_grant  
+     trans.randomize();
+     finish_item(trans); //finish_item has in-built has wait_for_item_done
+      `uvm_info("SEQ2", "SEQ2 Ended", UVM_NONE);
+  endtask
+ 
+endclass
+//3.driver
+class driver extends uvm_driver#(transaction);
+  `uvm_component_utils(driver)
+  
+  transaction trans;
+  
+  function new(input string path = "driver", uvm_component parent = null);  
+    super.new(path, parent);
+  endfunction
+  
+  virtual function void build_phase(uvm_phase phase);
+  	super.build_phase(phase);
+    trans = transaction::type_id::create("trans");
+  endfunction
+  
+  //task to set up communication between driver and sequencer 
+  virtual task run_phase(uvm_phase phase);
+    forever begin 
+      seq_item_port.get_next_item(trans); //gives grant to sequence
+      //////////////////
+      //apply seq to DUT 
+      //////////////////
+      seq_item_port.item_done();  //send item_done to sequence
+    end
+  endtask
+  
+endclass
+///////////////////////////////////////////////////////////////////////////////////
+//4.agent 
+class agent extends uvm_agent;
+  `uvm_component_utils(agent)
+  
+  //inside agent , we have driver and sequencer
+  uvm_sequencer#(transaction) seqr;
+  driver d;
+  
+  function new(input string path = "agent", uvm_component parent = null);  
+    super.new(path, parent);
+  endfunction
+  
+  //build phase
+  virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    seqr = uvm_sequencer#(transaction)::type_id::create("seqr", this);
+    d = driver::type_id::create("d", this);
+  endfunction
+  
+  //connect phase to connect driver and seqr
+  virtual function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    d.seq_item_port.connect(seqr.seq_item_export); //connected drv and seqr
+  endfunction
+  
+endclass
+/////////////////////////////////////////////////////////////////////////////
+//5.env
+class env extends uvm_env;
+  `uvm_component_utils(env)
+  
+  agent a;
+  
+  function new(input string path = "env", uvm_component parent = null);  
+    super.new(path, parent);
+  endfunction
+  
+  virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    a = agent::type_id::create("a", this);
+  endfunction 
+
+endclass
+/////////////////////////////////////////////////////////////////////////////
+//6.test 
+class test extends uvm_test;
+  `uvm_component_utils(test)
+  
+  sequence1 s1;
+  sequence2 s2;
+  env e;
+  
+  function new(input string path = "test", uvm_component parent = null);  
+    super.new(path, parent);
+  endfunction
+  
+  virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    e = env::type_id::create("e", this);
+    s1 = sequence1::type_id::create("s1");
+    s2 = sequence2::type_id::create("s2");
+  endfunction
+  
+  //task to do start method and for sequence get access to sequencer 
+  virtual task run_phase(uvm_phase phase);
+    phase.raise_objection(this);
+    
+    // e.a.seq.set_arbitration(UVM_SEQ_ARB_STRICT_RANDOM); 
+    
+     fork   //using fork join so that all processes happen parallely
+       s1.start(e.a.seqr);
+       s2.start(e.a.seqr); //by default , the access to seqr is FIFO fashion, first to get access gets finished first
+     join
+    phase.drop_objection(this);
+  endtask
+  
+endclass
+//////////////////////////////////////////////////////////////////////////////
+module tb;
+  
+  initial begin
+    run_test("test");
+  end
+  
+endmodule 
+``` 
+### Simulation Result 
+
+![alt text](<Section_7_Sequence/Simulation Results/54.Multiple Sequence in Parallel.png>)
+
+</details>
+
+__________________________________________________________
+
+
 </details>
 
 _______________________________________________________________
