@@ -1062,7 +1062,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/54.Multiple Sequence in Parallel.png>)
+![alt text](<Simulation Results/55.Changing Arbitration Mechanism ex 1.png>)
 
 </details>
 
