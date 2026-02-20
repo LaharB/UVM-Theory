@@ -1695,97 +1695,6 @@ endmodule
 __________________________________________________________
 
 
-<details>
- <summary><b>30.How to override phases</b></summary><br>
-
-### Code
-
-```systemverilog 
-`include "uvm_macros.svh"
-import uvm_pkg::*;
-
-class test extends uvm_test;
-  `uvm_component_utils(test)  //uvm_test belongs to uvm_component (which is dynamic)
-  
-  function new(string path = "test", uvm_component parent = null);
-   super.new(path, parent);             
-  endfunction
-  
-  //////////////////////construction phases/////////////////////
-  //1.build_phase
-  function void build_phase(uvm_phase phase);//good to use virtual before function
-   super.build_phase(phase);
-   `uvm_info("test", "Build phase executed", UVM_NONE);
-  endfunction
-               
-  //2.connect_phase
-  function void connect_phase(uvm_phase phase);//good to use virtual before function
-   super.connect_phase(phase);
-   `uvm_info("test", "Connect phase executed", UVM_NONE);
-  endfunction
-  
-  //3.end_of_elaboration_phase
-  function void end_of_elaboration_phase(uvm_phase phase);//good to use virtual before function
-   super.end_of_elaboration_phase(phase);
-   `uvm_info("test", "End of Elaboration phase executed", UVM_NONE);
-  endfunction
-               
-  //4.start_of_simulation_phase
-  function void start_of_simulation_phase(uvm_phase phase);//good to use virtual before function
-   super.start_of_simulation_phase(phase);
-   `uvm_info("test", "Start of Simulation phase executed", UVM_NONE);
-  endfunction
-               
-  /////////////////////////Main Phases////////////////////////////////////////
-               
-  //run_phase
-  task run_phase(uvm_phase phase);
-    `uvm_info("test", "Run Phase executed", UVM_NONE);               
-  endtask
-                
-  /////////////////////////Cleanup Phases///////////////////////////////////
-  //1.extract_phase
-  function void extract_phase(uvm_phase phase);
-    super.extract_phase(phase);
-    `uvm_info("test", "Extract phase executed", UVM_NONE);
-  endfunction
-  
-  //2.check_phase
-  function void check_phase(uvm_phase phase);
-    super.check_phase(phase);
-    `uvm_info("test", "Check phase executed", UVM_NONE);
-  endfunction
-  
-  //3.report_phase
-  function void report_phase(uvm_phase phase);
-    super.report_phase(phase);
-    `uvm_info("test", "Report phase executed", UVM_NONE);
-  endfunction
-  
-  //4.final_phase
-  function void final_phase(uvm_phase phase);
-    super.final_phase(phase);
-    `uvm_info("test", "Final phase executed", UVM_NONE);
-  endfunction
-               
-endclass
-  
-module tb;
-  
-  initial begin
-    run_test("test");
-  end
-  
-endmodule 
-
-``` 
-### Simulation Result 
-
-![alt text](<Section_3_Base_classes_P2_UVM_COMPONENT/Simulation Results/30.How to override phases.png>)
-
-</details>
-
-__________________________________________________________
 
 <details>
  <summary><b>31.Execution of build_phase in multiple components</b></summary><br>
@@ -3116,23 +3025,7 @@ _______________________________________________________________
 
 <details><summary><b>Section 5 : UVM_PHASES</b></summary>
 ------------------------------------------------------------------
-<details>
- <summary><b></b></summary><br>
 
- 
-
-### Code
-
-```systemverilog 
-
-``` 
-### Simulation Result 
-
-
-
-</details>
-
-______________________________________________________________
 
 
 </details>
