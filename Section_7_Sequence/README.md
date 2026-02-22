@@ -1069,13 +1069,14 @@ endmodule
 __________________________________________________________
 
 <details>
- <summary><b>56</b></summary><br>
+ <summary><b>56.Holding Access of Sequencer P1 - Priority</b></summary><br>
 
 ### Code
 
 ```systemverilog 
 `include "uvm_macros.svh"
 import uvm_pkg::*;
+//Holding Access of Sequencer using 1.Priority Method
  
 class transaction extends uvm_sequence_item;
   rand bit [3:0] a;
@@ -1104,47 +1105,44 @@ transaction trans;
   function new(input string inst = "seq1");
   super.new(inst);
   endfunction
- 
- virtual task body();
-    trans = transaction::type_id::create("trans");
-   `uvm_info("SEQ1", "SEQ1 Started" , UVM_NONE); 
-    start_item(trans);
-    trans.randomize();
-    finish_item(trans);
-   `uvm_info("SEQ1", "SEQ1 Ended" , UVM_NONE); 
-endtask
   
-  
-  
+  virtual task body();
+    repeat(3)begin
+      `uvm_info("SEQ1", "SEQ1 Started", UVM_NONE);
+      trans = transaction::type_id::create("trans");
+      start_item(trans);
+      assert(trans.randomize);
+      finish_item(trans);
+      `uvm_info("SEQ1", "SEQ1 Ended", UVM_NONE);   
+    end
+    
+  endtask
+
 endclass
-////////////////////////////////////////////////////////////////
- 
- 
+///////////////////////////////////////////////////////////////////
 class sequence2 extends uvm_sequence#(transaction);
   `uvm_object_utils(sequence2)
  
 transaction trans;
  
-  function new(input string inst = "seq2");
+  function new(input string inst = "seq1");
   super.new(inst);
   endfunction
- 
   
   virtual task body();
-    trans = transaction::type_id::create("trans");
-    `uvm_info("SEQ2", "SEQ2 Started" , UVM_NONE); 
-    start_item(trans);
-    trans.randomize();
-    finish_item(trans);
-    `uvm_info("SEQ2", "SEQ2 Ended" , UVM_NONE); 
+    repeat(3)begin
+      `uvm_info("SEQ2", "SEQ2 Started", UVM_NONE);
+      trans = transaction::type_id::create("trans");
+      start_item(trans);
+      assert(trans.randomize);
+      finish_item(trans);
+      `uvm_info("SEQ2", "SEQ2 Ended", UVM_NONE);   
+    end
+    
   endtask
-  
-  
+
 endclass
- 
- 
-////////////////////////////////////////////////////////////////////
- 
+////////////////////////////////////////////////////////////////
 class driver extends uvm_driver#(transaction);
 `uvm_component_utils(driver)
  
@@ -1168,7 +1166,6 @@ endfunction
  
  
 endclass
- 
 ///////////////////////////////////////////////////////////
  
 class agent extends uvm_agent;
@@ -1185,7 +1182,7 @@ driver d;
 virtual function void build_phase(uvm_phase phase);
 super.build_phase(phase);
 d = driver::type_id::create("DRV",this);
-seqr = uvm_sequencer #(transaction)::type_id::create("seq",this);
+  seqr = uvm_sequencer #(transaction)::type_id::create("seqr",this);
 endfunction
  
 virtual function void connect_phase(uvm_phase phase);
@@ -1195,7 +1192,6 @@ endfunction
 endclass
  
 /////////////////////////////////////////////////////////////////////////
- 
 class env extends uvm_env;
 `uvm_component_utils(env)
  
@@ -1231,44 +1227,24 @@ env e;
     s1 = sequence1::type_id::create("s1");
     s2 = sequence2::type_id::create("s2");  
     endfunction
- 
-    virtual task run_phase(uvm_phase phase);
- 
-    phase.raise_objection(this);
-////////////////////////
-/*
-SEQ_ARB_FIFO (DEF) first in first out ..priority won't work --priority do not effect
-SEQ_ARB_WEIGHTED  : weight is use for priority - sequncer generates a threshold by adding the priority values and selects a random value as threshold
-SEQ_ARB_RANDOM  strictly random --priority do not effect
-SEQ_ARB_STRICT_FIFO    support pri
-SEQ_ARB_STRICT_RANDOM  support pri
-SEQ_ARB_USER
- 
-*/
-//////////////////////////////////////////////////////
-      
-      //get access to seqr to set arbitration
-      
-      //e.a.seqr.set_arbitration(UVM_SEQ_FIFO);
-      //e.a.seqr.set_arbitration(UVM_SEQ_ARB_WEIGHTED);
-      //e.a.seqr.set_arbitration(UVM_SEQ_ARB_RANDOM);
-      e.a.seqr.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO);
-      //e.a.seqr.set_arbitration(UVM_SEQ_ARB_STRICT_RANDOM);
-      
-      
-    fork  
-      repeat(5) s2.start(e.a.seqr, null, 100); ///arguments - sequencer, parent sequence, priority, call_pre_post 
-      repeat(5) s1.start(e.a.seqr, null, 100); //300 after adding , suppose threshold is chosen randmomly by sequence to be 250 from the range (0-300) 
-      //sequence with higher priority then threshold will be get access first
-    join      
-    phase.drop_objection(this);
-    endtask
- 
-endclass
- 
-////////////////////////////////////////////////////////
-module tb;
   
+    //task to get access to sequencer by start method by sequence
+  virtual task run_phase(uvm_phase phase);
+    phase.raise_objection(this);
+    
+    //e.a.seqr.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO);
+     fork
+       s1.start(e.a.seqr, null, 100);
+       s2.start(e.a.seqr, null, 200);  
+     join  
+    phase.drop_objection(this);
+    
+  endtask
+
+endclass
+////////////////////////////////////////////////////////////////
+module tb; 
+ 
 initial begin
   run_test("test");
 end
