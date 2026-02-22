@@ -5380,7 +5380,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/56.Holding Access of Sequencer P1 - Priority .png>)
+![alt text](<Section_7_Sequence/Simulation Results/56.Holding Access of Sequencer P1 - Priority .png>)
 
 </details>
 
