@@ -1253,7 +1253,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/55.Changing Arbitration Mechanism ex 1.png>)
+![alt text](<Simulation Results/56.Holding Access of Sequencer P1 - Priority .png>)
 
 </details>
 
