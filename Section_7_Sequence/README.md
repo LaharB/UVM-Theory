@@ -1267,7 +1267,7 @@ __________________________________________________________
 ```systemverilog 
 `include "uvm_macros.svh"
 import uvm_pkg::*;
-//Holding Access of Sequencer using 1.Priority Method
+//Holding Access of Sequencer using 2.ARBITRATION
  
 class transaction extends uvm_sequence_item;
   rand bit [3:0] a;
@@ -1296,44 +1296,55 @@ transaction trans;
   function new(input string inst = "seq1");
   super.new(inst);
   endfunction
+ 
+   virtual task body();
+     repeat(3) begin
+ 
+   `uvm_info("SEQ1", "SEQ1 Started" , UVM_NONE); 
+   trans = transaction::type_id::create("trans");
+   start_item(trans);
+   assert(trans.randomize);
+   finish_item(trans);
+  `uvm_info("SEQ1", "SEQ1 Ended" , UVM_NONE); 
+   
+     end
+   endtask
   
-  virtual task body();
-    repeat(3)begin
-      `uvm_info("SEQ1", "SEQ1 Started", UVM_NONE);
-      trans = transaction::type_id::create("trans");
-      start_item(trans);
-      assert(trans.randomize);
-      finish_item(trans);
-      `uvm_info("SEQ1", "SEQ1 Ended", UVM_NONE);   
-    end
-    
-  endtask
-
+  
+  
 endclass
-///////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+ 
+ 
 class sequence2 extends uvm_sequence#(transaction);
   `uvm_object_utils(sequence2)
  
 transaction trans;
  
-  function new(input string inst = "seq1");
+  function new(input string inst = "seq2");
   super.new(inst);
   endfunction
+ 
   
   virtual task body();
-    repeat(3)begin
-      `uvm_info("SEQ2", "SEQ2 Started", UVM_NONE);
-      trans = transaction::type_id::create("trans");
-      start_item(trans);
-      assert(trans.randomize);
-      finish_item(trans);
-      `uvm_info("SEQ2", "SEQ2 Ended", UVM_NONE);   
-    end
+    repeat(3) begin
     
+    `uvm_info("SEQ2", "SEQ2 Started" , UVM_NONE); 
+    trans = transaction::type_id::create("trans");
+    start_item(trans);
+    assert(trans.randomize);
+    finish_item(trans);
+    `uvm_info("SEQ2", "SEQ2 Ended" , UVM_NONE);
+      
+    end  
   endtask
-
+  
+  
 endclass
-////////////////////////////////////////////////////////////////
+ 
+ 
+////////////////////////////////////////////////////////////////////
+ 
 class driver extends uvm_driver#(transaction);
 `uvm_component_utils(driver)
  
@@ -1357,6 +1368,7 @@ endfunction
  
  
 endclass
+ 
 ///////////////////////////////////////////////////////////
  
 class agent extends uvm_agent;
@@ -1367,22 +1379,23 @@ super.new(inst,c);
 endfunction
  
 driver d;
-  uvm_sequencer #(transaction) seqr;
+uvm_sequencer #(transaction) seq;
  
  
 virtual function void build_phase(uvm_phase phase);
 super.build_phase(phase);
 d = driver::type_id::create("DRV",this);
-  seqr = uvm_sequencer #(transaction)::type_id::create("seqr",this);
+seq = uvm_sequencer #(transaction)::type_id::create("seq",this);
 endfunction
  
 virtual function void connect_phase(uvm_phase phase);
 super.connect_phase(phase);
-  d.seq_item_port.connect(seqr.seq_item_export);
+d.seq_item_port.connect(seq.seq_item_export);
 endfunction
 endclass
  
 /////////////////////////////////////////////////////////////////////////
+ 
 class env extends uvm_env;
 `uvm_component_utils(env)
  
@@ -1418,23 +1431,26 @@ env e;
     s1 = sequence1::type_id::create("s1");
     s2 = sequence2::type_id::create("s2");  
     endfunction
-  
-    //task to get access to sequencer by start method by sequence
-  virtual task run_phase(uvm_phase phase);
+ 
+    virtual task run_phase(uvm_phase phase);
+ 
     phase.raise_objection(this);
-    
-    //e.a.seqr.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO);
-     fork
-       s1.start(e.a.seqr, null, 100);
-       s2.start(e.a.seqr, null, 200);  
-     join  
+    e.a.seq.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO);
+      
+      
+    fork  
+       s1.start(e.a.seq, null, 100);
+       s2.start(e.a.seq, null, 200);  
+    join  
+      
+      
     phase.drop_objection(this);
-    
-  endtask
-
+    endtask
 endclass
-////////////////////////////////////////////////////////////////
-module tb; 
+ 
+////////////////////////////////////////////////////////
+module tb;
+ 
  
 initial begin
   run_test("test");
@@ -1444,7 +1460,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/56.Holding Access of Sequencer P1 - Priority .png>)
+
 
 </details>
 
