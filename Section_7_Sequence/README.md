@@ -1260,7 +1260,7 @@ endmodule
 __________________________________________________________
 
 <details>
- <summary><b>56.Holding Access of Sequencer P1 - Priority</b></summary><br>
+ <summary><b>57.Holding Access of Sequencer P2</b></summary><br>
 
 ### Code
 
