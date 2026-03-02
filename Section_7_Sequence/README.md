@@ -1474,7 +1474,6 @@ __________________________________________________________
 ```systemverilog 
 `include "uvm_macros.svh"
 import uvm_pkg::*;
-//Holding Access of Sequencer using 2.ARBITRATION
  
 class transaction extends uvm_sequence_item;
   rand bit [3:0] a;
@@ -1503,26 +1502,26 @@ transaction trans;
   function new(input string inst = "seq1");
   super.new(inst);
   endfunction
- 
-   virtual task body();
-     repeat(3) begin
- 
-   `uvm_info("SEQ1", "SEQ1 Started" , UVM_NONE); 
-   trans = transaction::type_id::create("trans");
-   start_item(trans);
-   assert(trans.randomize);
-   finish_item(trans);
-  `uvm_info("SEQ1", "SEQ1 Ended" , UVM_NONE); 
-   
-     end
-   endtask
   
+  virtual task body();
+    
+    lock(m_sequencer); //lock method makes the sequence get the access to sequencer first
+    
+    repeat(3)begin
+      `uvm_info("SEQ1", "SEQ1 Started", UVM_NONE);
+      trans = transaction::type_id::create("trans");
+      start_item(trans);
+      assert(trans.randomize);
+      finish_item(trans);
+      `uvm_info("SEQ1", "SEQ1 Ended", UVM_NONE);
+    end
+    
+    unlock(m_sequencer);  //when unlocked , access goes to other sequence
   
+  endtask
   
 endclass
-////////////////////////////////////////////////////////////////
- 
- 
+/////////////////////////////////////////////////////////////////////
 class sequence2 extends uvm_sequence#(transaction);
   `uvm_object_utils(sequence2)
  
@@ -1534,6 +1533,9 @@ transaction trans;
  
   
   virtual task body();
+    
+    lock(m_sequencer);
+    
     repeat(3) begin
     
     `uvm_info("SEQ2", "SEQ2 Started" , UVM_NONE); 
@@ -1544,6 +1546,9 @@ transaction trans;
     `uvm_info("SEQ2", "SEQ2 Ended" , UVM_NONE);
       
     end  
+    
+    unlock(m_sequencer);
+    
   endtask
   
   
@@ -1642,12 +1647,12 @@ env e;
     virtual task run_phase(uvm_phase phase);
  
     phase.raise_objection(this);
-    e.a.seq.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO);
+   // e.a.seq.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO);
       
       
     fork  
-       s1.start(e.a.seq, null, 100);
-       s2.start(e.a.seq, null, 200);  
+       s2.start(e.a.seq, null, 200);
+       s1.start(e.a.seq, null, 100);  
     join  
       
       
