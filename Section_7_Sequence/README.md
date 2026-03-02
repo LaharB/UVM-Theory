@@ -1672,7 +1672,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/57.Holding Access of Sequencer P2 - Arbitration .png>)
+
 
 </details>
 
