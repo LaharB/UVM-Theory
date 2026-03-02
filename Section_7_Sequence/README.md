@@ -1467,7 +1467,7 @@ endmodule
 __________________________________________________________
 
 <details>
- <summary><b>57.Holding Access of Sequencer P2 - Arbitration</b></summary><br>
+ <summary><b>58.Holding Access of Sequencer P3 - Lock Method</b></summary><br>
 
 ### Code
 
