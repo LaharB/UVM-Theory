@@ -1875,7 +1875,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/58.Holding Access of Sequencer P3 - Lock Method.png>)
+
 
 </details>
 
