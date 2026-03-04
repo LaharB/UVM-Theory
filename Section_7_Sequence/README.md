@@ -1691,62 +1691,56 @@ class transaction extends uvm_sequence_item;
   rand bit [3:0] a;
   rand bit [3:0] b;
        bit [4:0] y;
- 
- 
+  
   function new(input string inst = "transaction");
   super.new(inst);
   endfunction
- 
-`uvm_object_utils_begin(transaction)
+  
+  `uvm_object_utils_begin(transaction)
   `uvm_field_int(a,UVM_DEFAULT)
   `uvm_field_int(b,UVM_DEFAULT)
   `uvm_field_int(y,UVM_DEFAULT)
-`uvm_object_utils_end
- 
+  `uvm_object_utils_end
+  
 endclass
 //////////////////////////////////////////////////////
  
 class sequence1 extends uvm_sequence#(transaction);
   `uvm_object_utils(sequence1)
  
-transaction trans;
+  transaction trans;
  
   function new(input string inst = "seq1");
   super.new(inst);
-  endfunction
+  endfunction 
   
   virtual task body();
-    
-    lock(m_sequencer); //lock method makes the sequence get the access to sequencer first
-    
     repeat(3)begin
-      `uvm_info("SEQ1", "SEQ1 Started", UVM_NONE);
-      trans = transaction::type_id::create("trans");
-      start_item(trans);
-      assert(trans.randomize);
-      finish_item(trans);
-      `uvm_info("SEQ1", "SEQ1 Ended", UVM_NONE);
-    end
-    
-    unlock(m_sequencer);  //when unlocked , access goes to other sequence
-  
-  endtask
+    `uvm_info("SEQ1", "SEQ1 Started" , UVM_NONE); 
+            trans = transaction::type_id::create("trans");
+            start_item(trans);
+            assert(trans.randomize);
+            finish_item(trans);
+           `uvm_info("SEQ1", "SEQ1 Ended" , UVM_NONE);
+           end   
+   endtask
   
 endclass
-/////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
 class sequence2 extends uvm_sequence#(transaction);
   `uvm_object_utils(sequence2)
  
-transaction trans;
+  transaction trans;
  
   function new(input string inst = "seq2");
   super.new(inst);
   endfunction
- 
   
   virtual task body();
-    
-    lock(m_sequencer);
+//grab method gives the sequence access to sequencer earlier just like lock method    
+    grab(m_sequencer);
+ //grab has more priority than lock 
     
     repeat(3) begin
     
@@ -1757,44 +1751,41 @@ transaction trans;
     finish_item(trans);
     `uvm_info("SEQ2", "SEQ2 Ended" , UVM_NONE);
       
-    end  
+    end
     
-    unlock(m_sequencer);
+    ungrab(m_sequencer); //ungrab gives access to other sequence
     
   endtask
   
-  
 endclass
- 
- 
 ////////////////////////////////////////////////////////////////////
  
 class driver extends uvm_driver#(transaction);
-`uvm_component_utils(driver)
+ `uvm_component_utils(driver)
  
-transaction t;
+ transaction t;
+
  
-function new(input string inst = "DRV", uvm_component c);
-super.new(inst,c);
-endfunction
+ function new(input string inst = "DRV", uvm_component c);
+ super.new(inst,c);
+ endfunction
  
-  virtual function void build_phase(uvm_phase phase);
-  	super.build_phase(phase);
+ virtual function void build_phase(uvm_phase phase);
+  super.build_phase(phase);
   	t = transaction::type_id::create("TRANS");
   endfunction
   
-  virtual task run_phase(uvm_phase phase);
-    forever begin
+ virtual task run_phase(uvm_phase phase);
+   forever begin
     seq_item_port.get_next_item(t);
     seq_item_port.item_done();
-    end    
-  endtask
+   end    
+ endtask
  
  
 endclass
  
 ///////////////////////////////////////////////////////////
- 
 class agent extends uvm_agent;
 `uvm_component_utils(agent)
  
@@ -1863,8 +1854,8 @@ env e;
       
       
     fork  
-       s2.start(e.a.seq, null, 200);
-       s1.start(e.a.seq, null, 100);  
+       s1.start(e.a.seq, null, 100); 
+       s2.start(e.a.seq, null, 200); 
     join  
       
       
