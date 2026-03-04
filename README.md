@@ -6003,7 +6003,8 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/59.Holding Access of Sequencer P4 - Grab Method.png>)
+![alt text](<Section_7_Sequence/Simulation Results/59.Holding Access of Sequencer P4 - Grab Method.png>)
+
 
 </details>
 
