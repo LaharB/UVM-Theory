@@ -280,7 +280,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/32.Understanding execution of connect phase.png>)
+![alt text](<Simulation Results/32.Understanding exec of connect phase.png>)
 
 </details>
 
