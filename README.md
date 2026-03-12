@@ -3327,11 +3327,10 @@ endmodule
 
 Using d for driver and m for monitor so driver connect phase gets executed first then monitor's.
 
-![alt text](<Simulation Results/33.Execution of multiple instance phases P1.png>)
+
 
 Using d for monitor and m for driver so monitor connect phase gets executed first then driver's.
 
-![alt text](<Simulation Results/33.Execution of multiple instance phases P2.png>)
 
 </details>
 
