@@ -3159,7 +3159,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/34.Raising Objection.png>)
+![alt text](<Section_5_UVM_PHASES/Simulation Results/34.Raising Objection.png>)
 
 </details>
 
