@@ -3242,7 +3242,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/36.Time consuming phases in multiple components.png>)
+![alt text](<Section_5_UVM_PHASES/Simulation Results/36.Time consuming phases in multiple components.png>)
 
 </details>
 
