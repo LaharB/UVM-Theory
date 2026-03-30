@@ -3172,7 +3172,7 @@ endmodule
 ``` 
 ### Simulation Result 
 
-![alt text](<Simulation Results/37.Timeout.png>)
+![alt text](<Section_5_UVM_PHASES/Simulation Results/37.Timeout.png>)
 
 </details>
 
