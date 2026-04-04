@@ -3174,12 +3174,6 @@ endmodule
 ![alt text](<Section_5_UVM_PHASES/Simulation Results/40.Phase Debug Switch P1 - +UVM_PHASE_TRACE 3.png>)
 ![alt text](<Section_5_UVM_PHASES/Simulation Results/40.Phase Debug Switch P1 - +UVM_PHASE_TRACE 4.png>)
 
-### +UVM_OBJECTION_TRACE
-
-![alt text](<Simulation Results/41.Objection Debug Switch Part 1.png>)
-![alt text](<Simulation Results/41.Objection Debug Switch Part 2.png>)
-
-
 </details>
 
 __________________________________________________________
