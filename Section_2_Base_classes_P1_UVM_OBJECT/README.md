@@ -793,6 +793,8 @@ __________________________________________________________________
 <details>
  <summary><b>22.do_print method</b></summary><br>
 
+The way of calling a core method does not change , only difference is that for do_method, we dont need to register the data members to the factory while implementing core_methods.
+
 ### Code
 
 ```systemverilog 
@@ -830,7 +832,7 @@ module tb;
   initial begin
     
     o = obj::type_id::create("o");
-    o.print();
+    o.print();  //way of calling a core method does not change , only difference is that for do_method, we dont need to register the data members to the factory while implementing core_methods
     
   end 
   
