@@ -553,7 +553,7 @@ module tb;
   
   initial begin
     s1 = new("s1");  //always provide instance name as path name 
-    //s2 = new("s2");  //no need of constructor for instance s for clone method
+    //s2 = new("s2");  //no need of constructor for instance s2 for clone method
     s1.f.randomize();
     
     //clone method - no need of constructor for instance s2
@@ -589,6 +589,8 @@ __________________________________________________________________
 
 <details>
  <summary><b>19.Compare Method</b></summary><br>
+
+Compare Method returns a 1 two objects have same data memeber values.
 
 ### Code
 
