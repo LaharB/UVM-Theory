@@ -925,8 +925,8 @@ class obj extends uvm_object;
   endfunction
   
   virtual function void do_copy(uvm_object rhs);
-    obj temp;
-    $cast(temp, rhs);
+    obj temp; //creating an object "temp" which is of "obj" type to which we will be copying the contents of argument i.e rhs which is of "uvm_object" type
+    $cast(temp, rhs); //temp gets an access to handle of rhs
     super.do_copy(rhs);
     
     this.a = temp.a;
