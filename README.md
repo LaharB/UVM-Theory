@@ -528,7 +528,7 @@ __________________________________________________________
 <details>
  <summary><b>11.Using field macros P1 INT</b></summary><br>
 
-This is a basic example of how to register data members to uvm_field_macros for using automation.
+This is a basic example of how to register data members to uvm_field_macros for using automation.If we dont register the variables / data members to the factory then we wont be able to see any values in the console
 
 ### Code
 

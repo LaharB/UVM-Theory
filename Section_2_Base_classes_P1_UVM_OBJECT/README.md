@@ -19,7 +19,9 @@ class obj extends uvm_object;
   endfunction
   
   rand bit [3:0] a;
-  
+
+  //if we dont register the variables / data members to the factory 
+  //then we wont be able to see any values in the console 
   `uvm_object_utils_begin(obj)
   `uvm_field_int(a, UVM_DEFAULT | UVM_BIN);
   `uvm_object_utils_end
@@ -488,7 +490,7 @@ module tb;
   
   initial begin
     s1 = new("s1");  //always provide instance name as path name 
-    s2 = new("s2");  //no need of constructor for instance s for clone method
+    s2 = new("s2");  //no need of constructor for instance s2 for clone method
     s1.f.randomize();
     
   
