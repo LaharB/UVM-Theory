@@ -590,7 +590,7 @@ __________________________________________________________________
 <details>
  <summary><b>19.Compare Method</b></summary><br>
 
-Compare Method returns a 1 two objects have same data memeber values.
+Compare Method returns 1 two objects have same data memeber values.
 
 ### Code
 
