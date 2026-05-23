@@ -16,7 +16,7 @@ module tb;
     int data = 101;
   
     initial begin
-    `uvm_info("TB_TOP", $sformatf("Value of data : %d", data) , UVM_LOW);
+    `uvm_info("TB_TOP", "Hello world", UVM_LOW);
     $display("Hello World with Display");  
     end
   
