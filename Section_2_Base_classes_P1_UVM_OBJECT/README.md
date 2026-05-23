@@ -675,8 +675,9 @@ module tb;
   first f1,f2;
   
   initial begin 
-    //create(arguments) -> for uvm_object , only 1 arguement : path 
-          //-> for uvm_component , 2 arguements : path and component name 
+    //create method(arguments) 
+    //-> for uvm_object , only 1 arguement : path 
+    //-> for uvm_component , 2 arguments : path and component name 
     //always use the instance name as path name 
     f1 = first::type_id::create("f1"); 
     f2 = first::type_id::create("f2");
