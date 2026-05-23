@@ -558,6 +558,8 @@ module tb;
   initial begin
     o = new("obj");
     o.randomize();
+    //`uvm_info("TB_TOP", $sformatf("Value of a: %0d", o.a), UVM_NONE); 
+    //No need of this line anymore as we have registered data members to factory so we can use automation provided by field_macros
     o.print(uvm_default_table_printer);
   end
 ``` 
