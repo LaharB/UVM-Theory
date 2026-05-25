@@ -3,6 +3,8 @@
 <details>
  <summary><b>28.Understanding typical format of config_db</b></summary><br>
 
+congif_db is used to share the resources among the components.
+
 ### Code
 
 ```systemverilog 
