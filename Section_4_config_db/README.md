@@ -3,7 +3,8 @@
 <details>
  <summary><b>28.Understanding typical format of config_db</b></summary><br>
 
-congif_db is used to share the resources among the components.
+- congif_db is used to share the resources among the components.
+- 1st argument is null when using static component and when using dynamic compoenent it will be this
 
 ### Code
 
@@ -45,7 +46,9 @@ class test extends uvm_test;
     //step 1
     //using config_db to get access of resources inside env class from test class
     uvm_config_db#(int)::set(null, "uvm_test_top", "data", 15); //4 arguements(context + instance name + key + value) 
-   //using null so that every class can get access to env class  
+   //using null so that every class can get access to env class 
+   //1st argument is null when using static component 
+   //when using dynamic compoenent it will be this  
     // use the data member name as key  
       
   endfunction
