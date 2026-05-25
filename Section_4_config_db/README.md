@@ -4,7 +4,7 @@
  <summary><b>28.Understanding typical format of config_db</b></summary><br>
 
 - congif_db is used to share the resources among the components.
-- 1st argument is null when using static component and when using dynamic compoenent it will be this
+- 1st argument is "null" when using static component and when using dynamic component i.e. classes , it will be "this" or can also use "null"
 
 ### Code
 
@@ -22,7 +22,7 @@ class env extends uvm_env;
     
     //step 2
     if(uvm_config_db#(int)::get(null, "uvm_test_top", "data", data))
-      `uvm_info("ENV", $sformatf("Value of data : %0d", data), UVM_NONE)
+      `uvm_info("ENV", $sformatf("Value of data : %0d", data), UVM_NONE) //here , we 
      else 
        `uvm_error("ENV", "Unable to access the value");   
   endfunction
