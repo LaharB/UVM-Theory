@@ -11,7 +11,7 @@
 ```systemverilog 
 class env extends uvm_env;
   `uvm_component_utils(env)  //using uvm_component_utils as env is static compoenent build from uvm_component
-  int data;
+  int data; //this will act as data container 
   
   function new(string path = "env", uvm_component parent = null);
     super.new(path, parent);
@@ -74,6 +74,12 @@ __________________________________________________________
 <details>
  <summary><b>29.Use case of config_db</b></summary>
 
+- uvm_test_top is test class's instance name which will be given UVM in default
+- Inside test class, we have env class.
+- Then inside env, we have agent class.
+- Finally inside agent class, we have driver class.So the path will be **uvm_test_top.env.agent.drv**.
+- If we use "this" as 1st arg and "" as 2nd arg, this whole path will be generated which will be used in "get" method for sharing resources between drv class and tb through the interface.
+
 ### Code
 
 ### Design code
@@ -115,7 +121,8 @@ class drv extends uvm_driver;
     super.build_phase(phase);
     //step2
     //use of config_db to give access of driver resources 
-    if(!uvm_config_db#(virtual adder_if)::get(this, "", "aif", aif)) //this keyword - gives the full path - uvm_test_top.env.agent.drv so have to use the same path name as arguement in set method in module tb
+    if(!uvm_config_db#(virtual adder_if)::get(this, "", "aif", aif)) //this keyword - gives the full path - uvm_test_top.env.agent.drv so have to use the same path name as arguement in set method in module tb 
+    //uvm_test_top is test class's instance name which will be given UVM in default
       `uvm_error("drv", "Unable to access interface");
   endfunction
       
@@ -165,7 +172,7 @@ class env extends uvm_env;
 
 endclass
 //////////////////////////////////////////////////////////////////////////////
-class test extends uvm_test;
+class test extends uvm_test; //test class's instance name will be uvm_test_top
   `uvm_component_utils(test)
   
   function new(input string inst = "test", uvm_component c);
@@ -190,7 +197,7 @@ module tb;
   initial begin
     //step 1 
     //4 arguemnts
-    uvm_config_db#(virtual adder_if)::set(null, "uvm_test_top.env.agent.drv", "aif", aif);
+    uvm_config_db#(virtual adder_if)::set(null, "uvm_test_top.env.agent.drv", "aif", aif); 
     run_test("test");
   end
   
