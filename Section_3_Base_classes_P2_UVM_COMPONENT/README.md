@@ -14,7 +14,7 @@ import uvm_pkg::*;
 class comp extends uvm_component;
   `uvm_component_utils(comp)
   
-  function new(string path = "comp", uvm_component parent = null);
+  function new(string path = "comp", uvm_component parent = null); //when null is given as argument then automatically uvm_root becomes the parent 
     super.new(path, parent);
   endfunction
   
@@ -34,7 +34,7 @@ module tb;
   
   initial begin
     c = comp::type_id::create("c", null);  //always use instance name as path name 
-    //here parent arguement is null because comp is child of uvm_top 
+    //here parent arguement is null because comp is child of uvm_top or uvm_root
     c.build_phase(null);  //here null is used only for demonstration purpose  
     
   end
@@ -74,7 +74,7 @@ import uvm_pkg::*;
 class a extends uvm_component;
   `uvm_component_utils(a)
   
-  function new(string path = "a", uvm_component parent = null);
+  function new(string path = "a", uvm_component parent = null); //null so uvm_root or uvm_top becomes the parent 
     super.new(path, parent);
   endfunction
   
