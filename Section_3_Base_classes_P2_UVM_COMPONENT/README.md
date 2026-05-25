@@ -19,6 +19,7 @@ class comp extends uvm_component;
   endfunction
   
   //build_phase function
+  //build_phase runs before simulation time
   virtual function void build_phase(uvm_phase phase);   //this line 
     super.build_phase(phase);  //and this line is standard for writing build_phase 
     `uvm_info("COMP", "Build Phase of comp executed", UVM_NONE);
