@@ -22,7 +22,7 @@ class env extends uvm_env;
     
     //step 2
     if(uvm_config_db#(int)::get(null, "uvm_test_top", "data", data))
-      `uvm_info("ENV", $sformatf("Value of data : %0d", data), UVM_NONE) //here , we 
+      `uvm_info("ENV", $sformatf("Value of data : %0d", data), UVM_NONE) //here , we  can use either this or null as 1st arg
      else 
        `uvm_error("ENV", "Unable to access the value");   
   endfunction
