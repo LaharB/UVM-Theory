@@ -1701,7 +1701,10 @@ ____________________________________________________________________
 <details><summary><b>Section 4 : config_db</b></summary>
 ------------------------------------------------------------------
 <details>
- <summary><b>28.Understanding typical format of config_db</b></summary>
+ <summary><b>28.Understanding typical format of config_db</b></summary><br>
+
+- congif_db is used to share the resources among the components.
+- 1st argument is "null" when using static component and when using dynamic component i.e. classes , it will be "this" or can also use "null"
 
 ### Code
 
