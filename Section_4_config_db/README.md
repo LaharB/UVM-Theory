@@ -21,8 +21,8 @@ class env extends uvm_env;
     super.build_phase(phase);
     
     //step 2
-    if(uvm_config_db#(int)::get(null, "uvm_test_top", "data", data))
-      `uvm_info("ENV", $sformatf("Value of data : %0d", data), UVM_NONE) //here , we  can use either this or null as 1st arg
+    if(uvm_config_db#(int)::get(null, "uvm_test_top", "data", data)) //here , we  can use either this or null as 1st arg
+      `uvm_info("ENV", $sformatf("Value of data : %0d", data), UVM_NONE) 
      else 
        `uvm_error("ENV", "Unable to access the value");   
   endfunction
@@ -48,7 +48,7 @@ class test extends uvm_test;
     uvm_config_db#(int)::set(null, "uvm_test_top", "data", 15); //4 arguements(context + instance name + key + value) 
    //using null so that every class can get access to env class 
    //1st argument is null when using static component 
-   //when using dynamic compoenent it will be this  
+   //when using dynamic component it will be this  
     // use the data member name as key  
       
   endfunction
