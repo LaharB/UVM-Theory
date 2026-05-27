@@ -1770,7 +1770,13 @@ endmodule
 __________________________________________________________
 
 <details>
- <summary><b>29.Use case of config_db</b></summary>
+ <summary><b>29.Use case of config_db</b></summary><br>
+
+- uvm_test_top is test class's instance name which will be given UVM in default
+- Inside test class, we have env class.
+- Then inside env, we have agent class.
+- Finally inside agent class, we have driver class. So the path will be **uvm_test_top.env.agent.drv**.
+- If we use "this" as 1st arg and "" as 2nd arg, this whole path will be generated which will be used in "get" method for sharing resources between drv class and tb through the interface.
 
 ### Code
 
