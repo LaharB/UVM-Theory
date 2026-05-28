@@ -567,6 +567,10 @@ __________________________________________________________
 <details>
  <summary><b>35.How time consuming phases work in a single component ?</b></summary><br>
 
+- Run phases also work sequentially just like other phases i.e until Reset phase gets completed , configure phase wont start executing.
+- Once Configure phase gets executed only then main phase will execute 
+- Once Main phase gets executed only then Shutdown phase will execute 
+
 ### Code
 
 ```systemverilog 
