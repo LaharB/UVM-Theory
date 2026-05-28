@@ -100,6 +100,9 @@ __________________________________________________________
 <details>
  <summary><b>31.Execution of build_phase in multiple components</b></summary><br>
 
+- build phase executes in top down fashion because until we call test class first ,the build phase of test class won't get executed and the object of env class won't get created and thus build_phase of env class won't be executed as well.
+- likewise if we don't call the env class, the drv and mon object won't get created and thus their respective build phases won't be executed
+
 ### Code
 
 ```systemverilog 
