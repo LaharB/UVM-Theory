@@ -1014,8 +1014,9 @@ __________________________________________________________
 <details>
  <summary><b>40.Phase Debug Switch</b></summary><br>
 
-We have to use the command in run options to see the phase trace report:
+- We have to use the command in run options to see the phase trace report:
 +UVM_PHASE_TRACE
+- With this command , we can see in the console when the various phases started and completed one after another.
 
 ### Code
 
