@@ -886,7 +886,7 @@ __________________________________________________________
  <summary><b>39.Drain Time: Multiple component</b></summary><br>
 
 - When working with multiple components, drain time is always specified from end_of_elaboration_phase
-- Here, the drain time will start only after all the main phases of all the components have completed.
+- Here, the drain time will start only after all the main phases of all the components have completed at 350ns 
 
 ### Code
 
