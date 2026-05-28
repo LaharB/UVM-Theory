@@ -74,7 +74,7 @@ __________________________________________________________
 <details>
  <summary><b>29.Use case of config_db</b></summary><br>
 
-- uvm_test_top is test class's instance name which will be given UVM in default
+- uvm_test_top is test class's instance name which will be given by UVM by default
 - Inside test class, we have env class.
 - Then inside env, we have agent class.
 - Finally inside agent class, we have driver class. So the path will be **uvm_test_top.env.agent.drv**.
@@ -121,7 +121,7 @@ class drv extends uvm_driver;
     super.build_phase(phase);
     //step2
     //use of config_db to give access of driver resources 
-    if(!uvm_config_db#(virtual adder_if)::get(this, "", "aif", aif)) //this keyword - gives the full path - uvm_test_top.env.agent.drv so have to use the same path name as arguement in set method in module tb 
+    if(!uvm_config_db#(virtual adder_if)::get(this, "", "aif", aif)) //this keyword - gives the full path - uvm_test_top.env.agent.drv.aif so have to use the same path name as arguement in set method in module tb 
     //uvm_test_top is test class's instance name which will be given UVM in default
       `uvm_error("drv", "Unable to access interface");
   endfunction
