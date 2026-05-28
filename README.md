@@ -1924,6 +1924,10 @@ ____________________________________________________________
 <details>
  <summary><b>30.How to override phases</b></summary><br>
 
+- Only Build phase executes in **top to bottom fashion.**
+- Build Phase and Connect phase do not consume time so we declare them using **function + super method.**
+- Run phase consumes so we declare it using **task**
+
 ### Code
 
 ```systemverilog 
