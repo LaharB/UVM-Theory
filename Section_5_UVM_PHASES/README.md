@@ -885,6 +885,9 @@ __________________________________________________________
 <details>
  <summary><b>39.Drain Time: Multiple component</b></summary><br>
 
+- When working with multiple components, drain time is always specified from end_of_elaboration_phase
+- Here, the drain time will start only after all the main phases of all the components have completed.
+
 ### Code
 
 ```systemverilog 
@@ -983,10 +986,10 @@ class test extends uvm_test;
   
   //drain_time should always be set from end_of_elaboration_phase
   function void end_of_elaboration_phase(uvm_phase phase);
-    uvm_phase main_phase;   //variable "main_phase" of type "uvm_phase"
+    uvm_phase main_phase;   //variable "main_phase" of type "uvm_phase" to get access of main_phase
     super.end_of_elaboration_phase(phase);
     main_phase = phase.find_by_name("main",0); //to get access to main_phases of all the components
-    main_phase.phase_done.set_drain_time(this, 100);
+    main_phase.phase_done.set_drain_time(this, 100); //all the main phase will get a drain time of 100ns
   endfunction
  
 endclass
