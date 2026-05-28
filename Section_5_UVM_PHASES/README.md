@@ -5,6 +5,7 @@
 
 - Only Build phase executes in **top to bottom fashion.**
 - Build Phase and Connect phase do not consume time so we declare them using **function + super method.**
+- Also , Cleanup phase does not consume any time.
 - Run phase consumes so we declare it using **task** 
 
 ### Code
