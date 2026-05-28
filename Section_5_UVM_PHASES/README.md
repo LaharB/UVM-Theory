@@ -1075,8 +1075,10 @@ __________________________________________________________
 <details>
  <summary><b>41.Objection Debug Switch</b></summary><br>
 
-We have to use the command in run options to see the objection trace report:
+- We have to use the command in run options to see the objection trace report:
 +UVM_OBJECTION_TRACE
+- With this command, we can see in the console, the various components in the run_phase when they raise and drop an objection
+- Everytime an objection is raised, the count goes up by 1 and when it is dropped, the count goes down by 1.
 
 ### Code
 
