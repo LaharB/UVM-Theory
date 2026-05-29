@@ -872,6 +872,8 @@ __________________________________________________________
 <details>
  <summary><b>49.Analysis Port</b></summary><br>
 
+- We use Analysis port when we want to **broadcast** same data to multiple components.
+
 ### Code
 
 ```systemverilog 
