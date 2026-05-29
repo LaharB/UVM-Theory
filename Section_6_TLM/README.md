@@ -873,8 +873,8 @@ __________________________________________________________
  <summary><b>49.Analysis Port</b></summary><br>
 
 - We use Analysis port when we want to **broadcast** same data to multiple components.
-- **Put** port and **Get** port have one to one communication.
-
+- **Put** port and **Get** port do one to one communication.
+- **Analysis** port does one to many communication.
 ### Code
 
 ```systemverilog 
