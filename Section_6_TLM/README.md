@@ -808,7 +808,7 @@ class consumer extends uvm_component;
   
   //we use virtual because we have the skeleton of a transport method defined in a parent class BUT we are implementing this tranpsort method in a child class i.e. consumer class
   virtual task transport(input int datar, output int datas);
-   datas = this.datas;
+   datas = this.datas; //passing the datas = 13 to output datas
     `uvm_info("CONS", $sformatf("Data Sent : %0d, Data Rcvd : %0d", datas, datar), UVM_NONE);
   endtask
    
@@ -860,7 +860,7 @@ module tb;
   end
   
 endmodule 
-``` 
+```  
 ### Simulation Result 
 
 ![alt text](<Simulation Results/48.Transport Port.png>)
