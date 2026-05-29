@@ -903,7 +903,7 @@ class producer extends uvm_component;
   task main_phase(uvm_phase phase);
   phase.raise_objection(this);
   `uvm_info("PROD", $sformatf("Data Broadcasted : %0d", data), UVM_NONE);
-  port.write(data);
+  port.write(data); //calling write method 
   phase.drop_objection(this);
  endtask
     
@@ -926,6 +926,7 @@ class consumer1 extends uvm_component;
     imp  = new("imp", this);
   endfunction
   
+  //using virtual because write method is defined inside parent class i.e uvm_component but we are implementing it inside child classes i.e consumer1 and consumer2
   virtual function void write(int datar);
     `uvm_info("CONS1", $sformatf("Data Recv : %0d", datar), UVM_NONE); 
   endfunction
@@ -949,6 +950,7 @@ class consumer2 extends uvm_component;
     imp  = new("imp", this);
   endfunction
   
+  //using virtual because write method is defined inside parent class i.e uvm_component but we are implementing it inside child classes i.e consumer1 and consumer2
   virtual function void write(int datar);
     `uvm_info("CONS2", $sformatf("Data Recv : %0d", datar), UVM_NONE); 
   endfunction
