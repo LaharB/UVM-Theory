@@ -241,10 +241,13 @@ class producer extends uvm_component;
     super.new(path, parent);
   endfunction
   
+  //always use build_phase for creation of an object 
+  //here we use build_phase to create the instance of PORT
   virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
     send  = new("send", this);
   endfunction
+
   //task for using a put method 
   task main_phase(uvm_phase phase);
     phase.raise_objection(this);
@@ -264,6 +267,8 @@ class consumer extends uvm_component;
     super.new(path, parent);
   endfunction
   
+  //always use build_phase for creation of an object 
+  //here we use build_phase to create the instance of IMPLEMENTATION
   virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
     imp  = new("imp", this);
