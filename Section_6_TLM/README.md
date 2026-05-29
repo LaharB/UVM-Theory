@@ -68,6 +68,7 @@ class env extends uvm_env;
     c = consumer::type_id::create("c", this);
   endfunction
   
+  //connect phase is used for connection of TLM 
   virtual function void connect_phase(uvm_phase phase);
     super.connect_phase(phase); 
     p.send.connect(c.recv);   //access "send" using p handle and "recv" using c handle and connect them using .connect  
