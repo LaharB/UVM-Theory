@@ -750,6 +750,9 @@ __________________________________________________________
 <details>
  <summary><b>48.Transport Port</b></summary><br>
 
+- When we want data flow to be bi-directional i.e. to send and retrieve data, we use **TRANSPORT**
+- We use virtual while implemeting tranport method because we have the skeleton of a transport method defined in a parent class BUT we are implementing this method in a child class i.e. consumer class
+
 ### Code
 
 ```systemverilog 
@@ -789,7 +792,7 @@ class consumer extends uvm_component;
   `uvm_component_utils(consumer)
 
 //Two arguments for transport port + 1 from implementation port
-  uvm_blocking_transport_imp #(int, int, consumer) imp;
+  uvm_blocking_transport_imp #(int, int, consumer) imp; //class will be the 3rd arg where we add the transport method
 
   int datas = 13;  //data to be sent 
   int datar = 0;   //variable to store the data received
@@ -803,6 +806,7 @@ class consumer extends uvm_component;
     imp = new("imp", this);
   endfunction
   
+  //we use virtual because we have the skeleton of a transport method defined in a parent class BUT we are implementing this tranpsort method in a child class i.e. consumer class
   virtual task transport(input int datar, output int datas);
    datas = this.datas;
     `uvm_info("CONS", $sformatf("Data Sent : %0d, Data Rcvd : %0d", datas, datar), UVM_NONE);
