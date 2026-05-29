@@ -875,6 +875,9 @@ __________________________________________________________
 - We use Analysis port when we want to **broadcast** same data to multiple components.
 - **Put** port and **Get** port do one to one communication.
 - **Analysis** port does one to many communication.
+- In Put and Get method, we use blocking or non-blokcing method so we can use either function or task to implement as we may or may not consume time while sending and receiving data
+- But Analysis port strictly can be implemeted using **function** only as we send/receive data but do not wait for any response hence do not consume any time thus only function is allowed.
+
 ### Code
 
 ```systemverilog 
