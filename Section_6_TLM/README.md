@@ -459,7 +459,7 @@ class test extends uvm_test;
  //just to see the heirachy
   virtual function void end_of_elaboration_phase(uvm_phase phase);
     super.end_of_elaboration_phase(phase);
-    uvm_top.print_topology();
+    uvm_top.print_topology(); //uvm_top(global variable) is accessable to all the components
   endfunction
   
 endclass
@@ -519,7 +519,7 @@ endclass
 class subconsumer extends uvm_component;
   `uvm_component_utils(subconsumer)
  
-  uvm_blocking_put_imp #(int, subconsumer) imp;
+  uvm_blocking_put_imp #(int, subconsumer) imp; //2nd arg is subconsumer because we add PUT method here
   
   function new(input string path = "subconsumer", uvm_component parent = null);
     super.new(path, parent);
@@ -530,6 +530,7 @@ class subconsumer extends uvm_component;
     imp = new("imp", this);
   endfunction
   
+  //we add the PUT method here because we want to receive data here 
   function void put(int datar);
     `uvm_info("SUBCONS", $sformatf("Data Rcvd : %0d", datar), UVM_NONE);
   endfunction
@@ -540,7 +541,7 @@ class consumer extends uvm_component;
   `uvm_component_utils(consumer)
  
   uvm_blocking_put_export #(int) expo;
-  subconsumer s;
+  subconsumer s; //subconsumer is inside consumer 
   
   function new(input string path = "consumer", uvm_component parent = null);
     super.new(path, parent);
@@ -555,7 +556,7 @@ class consumer extends uvm_component;
   //connect subconsumer port with parent class consumer
   virtual function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
-    expo.connect(s.imp);
+    expo.connect(s.imp); //connection starts at expo and ends at imp so expo.connect comes first
   endfunction
    
 endclass
