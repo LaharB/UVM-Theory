@@ -274,7 +274,7 @@ class consumer extends uvm_component;
     imp  = new("imp", this);
   endfunction
   
-  //function to display data received 
+  //function to display data received , we can use either task or function
   function void put(int datar);
     `uvm_info("Cons", $sformatf("Data Rcvd : %0d", datar), UVM_NONE);
   endfunction
@@ -375,7 +375,7 @@ endclass
 class producer extends uvm_component;
   `uvm_component_utils(producer)
   
-  subproducer s;
+  subproducer s; //subproducer is inside producer
   
   uvm_blocking_put_port #(int) port;
   
@@ -392,7 +392,7 @@ class producer extends uvm_component;
   //subproducer is inside porducer only , so we connect them in porducer class itself , not in env class
   virtual function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
-    s.subport.connect(port);
+    s.subport.connect(port); //connection starts at subport and ends at port so s.subport comes first
   endfunction
 
 endclass
