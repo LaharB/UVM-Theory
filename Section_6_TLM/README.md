@@ -751,7 +751,7 @@ __________________________________________________________
  <summary><b>48.Transport Port</b></summary><br>
 
 - When we want data flow to be bi-directional i.e. to send and retrieve data, we use **TRANSPORT**
-- We use virtual while implemeting tranport method because we have the skeleton of a transport method defined in a parent class BUT we are implementing this method in a child class i.e. consumer class
+- We use virtual while implemeting tranport method because we have the skeleton of a transport method defined in a **parent class(uvm_component)** BUT we are implementing this method in a **child class** i.e. consumer class
 
 ### Code
 
@@ -806,7 +806,7 @@ class consumer extends uvm_component;
     imp = new("imp", this);
   endfunction
   
-  //we use virtual because we have the skeleton of a transport method defined in a parent class BUT we are implementing this tranpsort method in a child class i.e. consumer class
+  //we use virtual because we have the skeleton of a transport method defined in a parent class(uvm_component) BUT we are implementing this tranpsort method in a child class i.e. consumer class
   virtual task transport(input int datar, output int datas);
    datas = this.datas; //passing the datas = 13 to output datas
     `uvm_info("CONS", $sformatf("Data Sent : %0d, Data Rcvd : %0d", datas, datar), UVM_NONE);
