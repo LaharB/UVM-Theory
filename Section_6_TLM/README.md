@@ -5,7 +5,7 @@
 
 - Here Producer is the initiator and Consumer is the responder and so is the control flow.
 - The data flow is from Producer to Consumer 
-- Since control flow and data flow is in same direction so we **PUT** method.
+- Since **control flow** and **data flow** is in same direction so we **PUT** method.
 - And PUT method can be used in **Blocking and Non-Blocking way**.
 - This code will give error because export is not the point where a transaction ends and there is no proper method inside port or export to send the data , it is done by "implementation".
 
