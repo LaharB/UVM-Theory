@@ -628,6 +628,9 @@ __________________________________________________________
 <details>
  <summary><b>47.Get Operation</b></summary><br>
 
+- When the **control flow and data flow are in opposite direction**, we use **GET** port 
+- The control flow is from PRODUCER to CONSUMER but the data flow is from CONSUMER to PRODUCER i.e GET port is used to retrieve the data from a CONSUMER
+  
 ### Code
 
 ```systemverilog 
