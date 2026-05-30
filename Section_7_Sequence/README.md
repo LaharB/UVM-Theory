@@ -1246,6 +1246,8 @@ env e;
     phase.raise_objection(this);
     
     //e.a.seqr.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO);
+
+    //by default: UVM_STRICT_ARB_FIFO , priority does not effect
      fork
        s1.start(e.a.seqr, null, 100);
        s2.start(e.a.seqr, null, 200);  
@@ -1870,7 +1872,7 @@ env e;
     phase.raise_objection(this);
    // e.a.seq.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO);
       
-      
+  //    
     fork  
        s1.start(e.a.seq, null, 100); 
        s2.start(e.a.seq, null, 200); 
