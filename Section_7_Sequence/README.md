@@ -1055,7 +1055,7 @@ SEQ_ARB_USER
       
       
     fork  
-      repeat(5) s2.start(e.a.seqr, null, 100); ///arguments - sequencer, parent sequence, priority, call_pre_post 
+      repeat(5) s2.start(e.a.seqr, null, 100); ///arguments - sequencer, parent sequence : default value is none, priority, call_pre_post 
       repeat(5) s1.start(e.a.seqr, null, 100); //300 after adding , suppose threshold is chosen randmomly by sequence to be 250 from the range (0-300) 
       //sequence with higher priority then threshold will be get access first
     join      
