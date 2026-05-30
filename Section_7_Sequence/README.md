@@ -496,6 +496,13 @@ __________________________________________________________
 <details>
  <summary><b>53.Sending Data to Driver METHOD 2</b></summary><br>
 
+- Problem with uvm_do macro is that it creates the transaction, randomizes it and also communicates it to the sequencer.
+- If we want to modify he randomized data in between, we wouldn't be able to do so.
+- So we use the start_item and finish_item 
+- start_item(trans); start_item has wait_for_grant embedded in it, as soon as the request from driver is received, the randomization starts i.e. assert(trans.randomize);
+- finish_item(trans); finish_item has send_request embedded in it 
+- after this UVM automatically calls wait_for_item and as soon as acknowledgement is received, the next sequence is sent
+
 ### Code
 
 ```systemverilog 
@@ -541,9 +548,10 @@ class sequence1 extends uvm_sequence#(transaction);
     repeat(5)begin
      trans = transaction::type_id::create("trans");
      start_item(trans); //start_item and specify the instance name(here trans) 
-  //start_item sends thr req to driver and has inbuilt wait_for_grant  
+  //start_item has wait_for_grant embedded in it, as soon as the request from driver is received, the randomization starts 
      assert(trans.randomize);
-     finish_item(trans); //finish_item has in-built has wait_for_item_done 
+     finish_item(trans); //finish_item has in-built has wait_for_item_done
+  //after this UVM automatically calls wait_for_item and as soon as acknowledgement(item_done) is received, the next sequence is sent 
   //once we get item_done, we do uvm_info
      `uvm_info("SEQ1", $sformatf("Data Sent: a: %0d b: %0d", trans.a , trans.b), UVM_NONE);
     end
@@ -1266,13 +1274,6 @@ __________________________________________________________
 
 <details>
  <summary><b>57.Holding Access of Sequencer P2 - Arbitration</b></summary><br>
-
-- Problem with uvm_do macro is that it creates the transaction, randomizes it and also communicates it to the sequencer.
-- If we want to modify he randomized data in between, we wouldn't be able to do so.
-- So we use the start_item and finish_item 
-- start_item(trans); start_item has wait_for_grant embedded in it, as soon as the request from driver is received, the randomization starts i.e. assert(trans.randomize);
-- finish_item(trans); finish_item has send_request embedded in it 
-- after this UVM automatically calls wait_for_item and as soon as acknowledgement is received, the next sequence is sent
 
 ### Code
 
