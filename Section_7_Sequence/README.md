@@ -58,7 +58,7 @@ endclass
 class driver extends uvm_driver#(transaction);   //driver belong to uvm_component 
   `uvm_component_utils(driver)
   
-  transaction t;  //transaction instance inside driver to communicate with it and tell when to send the next packet
+  transaction t;  //transaction instance will act as a data container to store the sequence received from a sequencer
   
   function new(input string path = "driver", uvm_component parent = null);
     super.new(path, parent);
@@ -66,14 +66,14 @@ class driver extends uvm_driver#(transaction);   //driver belong to uvm_componen
   
   virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    t = transaction::type_id::create("t", this);
+    t = transaction::type_id::create("t", this); //creating object of the transaction instance 
   endfunction
   
   //run_phase to communicate with the transaction class
   virtual task run_phase(uvm_phase phase);
     forever begin
     //seq_item_port is the port inside driver
-      seq_item_port.get_next_item(t);  //using get method to get next packet
+      seq_item_port.get_next_item(t);  //get_next_item line tells the sequencer that driver is ready to receive the data, sequencer will convey that to a sequence and we will receive the sequence
       /////apply seq to DUT , here we are not doing so
       seq_item_port.item_done();  //item_done tells thats packet has been sent to DUT
     end
