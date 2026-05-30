@@ -395,7 +395,7 @@ class driver extends uvm_driver#(transaction);
   virtual task run_phase(uvm_phase phase);
    trans = transaction::type_id::create("trans");  //1 arg as belong to uvm_object
     forever begin 
-      seq_item_port.get_next_item(trans); //tell transaction tos end next packet
+      seq_item_port.get_next_item(trans); //request the seqr to send next psequence, once received the sequence, update the trans container with the data 
       `uvm_info("DRV", $sformatf("Data Rcvd: a: %0d, b: %0d",trans.a, trans.b), UVM_NONE);
       //////////////////
       //apply seq to DUT 
