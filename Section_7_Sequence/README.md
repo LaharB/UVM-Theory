@@ -74,8 +74,11 @@ class driver extends uvm_driver#(transaction);   //driver belong to uvm_componen
     forever begin
     //seq_item_port is the port inside driver
       seq_item_port.get_next_item(t);  //get_next_item line tells the sequencer that driver is ready to receive the data, sequencer will convey that to a sequence and we will receive the sequence
+      
       /////apply seq to DUT , here we are not doing so
-      seq_item_port.item_done();  //item_done tells thats packet has been sent to DUT
+
+      seq_item_port.item_done();  //item_done tells the sequencer that packet has been sent to DUT and driver is ready to get the next packet or sequence 
+      //this acknowledgement is non-blocking nature which means we dont need to wait to sent the request for a next sequence until we receive the acknowledgement for a previous sequence 
     end
   endtask
   
