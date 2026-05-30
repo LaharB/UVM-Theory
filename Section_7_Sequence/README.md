@@ -395,12 +395,12 @@ class driver extends uvm_driver#(transaction);
   virtual task run_phase(uvm_phase phase);
    trans = transaction::type_id::create("trans");  //1 arg as belong to uvm_object
     forever begin 
-      seq_item_port.get_next_item(trans); //request the seqr to send next psequence, once received the sequence, update the trans container with the data 
+      seq_item_port.get_next_item(trans); //request the seqr to send the sequence, once received the sequence, update the trans container with the data 
       `uvm_info("DRV", $sformatf("Data Rcvd: a: %0d, b: %0d",trans.a, trans.b), UVM_NONE);
       //////////////////
       //apply seq to DUT 
       //////////////////
-      seq_item_port.item_done();  //send item_done to seq
+      seq_item_port.item_done();  //send acknowlegement to seqr that driver is ready to receive the next sequence
     end
   endtask
   
@@ -1266,6 +1266,9 @@ __________________________________________________________
 
 <details>
  <summary><b>57.Holding Access of Sequencer P2 - Arbitration</b></summary><br>
+
+- Problem with uvm_do macro is that it creates the transaction, randomizes it and also communicates it to the sequencer.
+- If we want to modify he randomized data in between, we wouldn't be able to do so.
 
 ### Code
 
