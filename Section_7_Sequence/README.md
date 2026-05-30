@@ -1870,7 +1870,7 @@ env e;
     virtual task run_phase(uvm_phase phase);
  
     phase.raise_objection(this);
-   // e.a.seq.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO);
+    e.a.seq.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO);
       
   // by default UVM_SEQ_FIFO, priority does not effect
     fork  
