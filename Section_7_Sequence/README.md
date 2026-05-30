@@ -1269,6 +1269,10 @@ __________________________________________________________
 
 - Problem with uvm_do macro is that it creates the transaction, randomizes it and also communicates it to the sequencer.
 - If we want to modify he randomized data in between, we wouldn't be able to do so.
+- So we use the start_item and finish_item 
+- start_item(trans); start_item has wait_for_grant embedded in it, as soon as the request from driver is received, the randomization starts i.e. assert(trans.randomize);
+- finish_item(trans); finish_item has send_request embedded in it 
+- after this UVM automatically calls wait_for_item and as soon as acknowledgement is received, the next sequence is sent
 
 ### Code
 
@@ -1310,9 +1314,10 @@ transaction trans;
  
    `uvm_info("SEQ1", "SEQ1 Started" , UVM_NONE); 
    trans = transaction::type_id::create("trans");
-   start_item(trans);
+   start_item(trans); //start_item has wait_for_grant embedded in it, as soon as the request from driver is received, the randomization starts
    assert(trans.randomize);
-   finish_item(trans);
+   finish_item(trans); //finish_item has send_request embedded in it 
+   //after this UVM automatically calls wait_for_item and as soon as acknowledgement is received, the next sequence is sent
   `uvm_info("SEQ1", "SEQ1 Ended" , UVM_NONE); 
    
      end
