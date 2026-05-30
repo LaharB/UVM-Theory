@@ -1036,7 +1036,7 @@ env e;
 ////////////////////////
 /*
 SEQ_ARB_FIFO (DEF) first in first out ..priority won't work --priority do not effect
-SEQ_ARB_WEIGHTED  : weight is use for priority - sequncer generates a threshold by adding the priority values and selects a random value as threshold
+SEQ_ARB_WEIGHTED  : weight is use for priority - sequencer generates a threshold by adding the priority values and selects a random value as threshold
 SEQ_ARB_RANDOM  strictly random --priority do not effect
 SEQ_ARB_STRICT_FIFO    support pri
 SEQ_ARB_STRICT_RANDOM  support pri
