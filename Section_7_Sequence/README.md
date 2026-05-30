@@ -27,7 +27,7 @@ class transaction extends uvm_sequence_item;
   	`uvm_field_int(b, UVM_DEFAULT);
   	`uvm_field_int(y, UVM_DEFAULT);
   `uvm_object_utils_end
-  
+
 endclass
 /////////////////////////////////////////////////////////////////////////////
 //2.Sequence
