@@ -1247,7 +1247,7 @@ env e;
     
     //e.a.seqr.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO);
 
-    //by default: UVM_STRICT_ARB_FIFO , priority does not effect
+    //by default: UVM_SEQ_FIFO , priority does not effect
      fork
        s1.start(e.a.seqr, null, 100);
        s2.start(e.a.seqr, null, 200);  
