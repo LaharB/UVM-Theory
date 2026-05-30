@@ -146,7 +146,7 @@ class test extends uvm_test;
   //run_phase to start the sequence and connect with sequencer
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
-    seq1.start(e.a.seqr);
+    seq1.start(e.a.seqr); //calling start method will start body() inside sequence
     phase.drop_objection(this);
   endtask
   
