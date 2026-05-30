@@ -1668,8 +1668,8 @@ env e;
     phase.raise_objection(this);
    // e.a.seq.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO);
       
-    //by default: e.a.seq.set_arbitration(UVM_SEQ_ARB_FIFO)
-    //priority do not effect 
+    //by default: e.a.seq.set_arbitration(UVM_SEQ_FIFO)
+    //priority does not effect 
     fork  
        s2.start(e.a.seq, null, 200); //s2 gets access first
        s1.start(e.a.seq, null, 100); //then s1 
