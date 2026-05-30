@@ -38,6 +38,7 @@ class sequence1 extends uvm_sequence#(transaction);
     super.new(path);
   endfunction
   
+  //when we call START method in test class, these 3 tasks automatically start executing int he sequence class
   virtual task pre_body();
     `uvm_info("SEQ1", "PRE-BODY EXECUTED", UVM_NONE);
   endtask
