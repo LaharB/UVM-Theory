@@ -374,7 +374,7 @@ class sequence1 extends uvm_sequence#(transaction);
   
   virtual task body();
     repeat(5)begin
-      `uvm_do(trans); //uvm_do creates the object, randomizes the data and also connects trans to the sequencer
+      `uvm_do(trans); //uvm_do macro creates the object, randomizes the data and also connects trans to the sequencer
       `uvm_info("SEQ1", $sformatf("Data Sent: a: %0d b: %0d", trans.a , trans.b), UVM_NONE);
      end
   endtask
