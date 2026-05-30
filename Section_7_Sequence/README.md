@@ -17,11 +17,11 @@ class transaction extends uvm_sequence_item;
   rand bit [3:0] b;
    	   bit [4:0]y;
   
-  function new(input string path = "transaction"); //only one argument as transaction belongs to uvm_object
+  function new(input string path = "transaction"); //only one argument as transaction belongs to uvm_object 
     super.new(path);
   endfunction
   
-  //register the data members to factory for core methods
+  //register the data members to factory for automation
   `uvm_object_utils_begin(transaction)
   	`uvm_field_int(a, UVM_DEFAULT);
   	`uvm_field_int(b, UVM_DEFAULT);
