@@ -1036,7 +1036,7 @@ env e;
 ////////////////////////
 /*
 SEQ_ARB_FIFO (DEF) first in first out ..priority won't work --priority do not effect
-SEQ_ARB_WEIGHTED  : weight is use for priority - sequencer generates a threshold by adding the priority values and selects a random value as threshold
+SEQ_ARB_WEIGHTED  : weight is used for priority - sequencer generates a threshold by adding the priority values and selects a random value as threshold
 SEQ_ARB_RANDOM  strictly random --priority do not effect
 SEQ_ARB_STRICT_FIFO    support pri
 SEQ_ARB_STRICT_RANDOM  support pri
@@ -1048,16 +1048,16 @@ SEQ_ARB_USER
       //get access to seqr to set arbitration
       
       //e.a.seqr.set_arbitration(UVM_SEQ_FIFO);
-      //e.a.seqr.set_arbitration(UVM_SEQ_ARB_WEIGHTED);
+      e.a.seqr.set_arbitration(UVM_SEQ_ARB_WEIGHTED);
       //e.a.seqr.set_arbitration(UVM_SEQ_ARB_RANDOM);
-      e.a.seqr.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO);
+      //e.a.seqr.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO);
       //e.a.seqr.set_arbitration(UVM_SEQ_ARB_STRICT_RANDOM);
       
       
     fork  
       repeat(5) s2.start(e.a.seqr, null, 100); ///arguments - sequencer, parent sequence : default value is none, priority, call_pre_post 
-      repeat(5) s1.start(e.a.seqr, null, 100); //300 after adding , suppose threshold is chosen randmomly by sequence to be 250 from the range (0-300) 
-      //sequence with higher priority then threshold will be get access first
+      repeat(5) s1.start(e.a.seqr, null, 200); //300 after adding , suppose threshold is chosen randmomly by sequence to be 250 from the range (0-300) 
+      //sequence with higher priority then threshold will be getting more frequent access to sequencer 
     join      
     phase.drop_objection(this);
     endtask
@@ -1449,7 +1449,7 @@ env e;
     virtual task run_phase(uvm_phase phase);
  
     phase.raise_objection(this);
-    e.a.seq.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO);
+    e.a.seq.set_arbitration(UVM_SEQ_ARB_STRICT_FIFO); //Strict FIFO supports priority
       
       
     fork  
