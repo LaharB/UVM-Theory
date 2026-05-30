@@ -43,7 +43,7 @@ class sequence1 extends uvm_sequence#(transaction);
     `uvm_info("SEQ1", "PRE-BODY EXECUTED", UVM_NONE);
   endtask
   
-  virtual task body();
+  virtual task body(); //the logic or the sequence that we want to send to a DUT will be inside body()
     `uvm_info("SEQ1", "BODY EXECUTED", UVM_NONE);
   endtask
   
