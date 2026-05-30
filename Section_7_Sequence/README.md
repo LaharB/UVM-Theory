@@ -74,11 +74,11 @@ class driver extends uvm_driver#(transaction);   //driver belong to uvm_componen
     forever begin
     //seq_item_port is the port inside driver
       seq_item_port.get_next_item(t);  //get_next_item line tells the sequencer that driver is ready to receive the data, sequencer will convey that to a sequence and we will receive the sequence
-      
+
       /////apply seq to DUT , here we are not doing so
 
-      seq_item_port.item_done();  //item_done tells the sequencer that packet has been sent to DUT and driver is ready to get the next packet or sequence 
-      //this acknowledgement is non-blocking nature which means we dont need to wait to sent the request for a next sequence until we receive the acknowledgement for a previous sequence 
+      seq_item_port.item_done();  //item_done tells the sequencer that packet has been sent to DUT and driver is ready to get the next sequence 
+      //this acknowledgement is non-blocking in nature which means we dont need to wait to sent the request for a next sequence until we receive the acknowledgement for a previous sequence 
     end
   endtask
   
@@ -104,7 +104,7 @@ class agent extends uvm_agent;
   //connecting driver and sequencer ports 
   virtual function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
-    d.seq_item_port.connect(seqr.seq_item_export);
+    d.seq_item_port.connect(seqr.seq_item_export); //driver has a port and sequencer has an export 
   endfunction
 
 endclass
@@ -126,7 +126,7 @@ class env extends uvm_env;
 
 endclass
 /////////////////////////////////////////////////////////////////////////////////////
-//6.test
+//6.test - inside test class, we start the sequencer 
 class test extends uvm_test;
   `uvm_component_utils(test)
   
