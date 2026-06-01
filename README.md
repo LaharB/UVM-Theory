@@ -4400,7 +4400,7 @@ class sequence1 extends uvm_sequence#(transaction);
   
   virtual task body();
     repeat(5)begin
-      `uvm_do(trans); //uvm_do creates the object, randomizes the data and also connects trans to the sequencer
+      `uvm_do(trans); //uvm_do macro creates the object, randomizes the data and also communicate that trans packet to the sequencer
       `uvm_info("SEQ1", $sformatf("Data Sent: a: %0d b: %0d", trans.a , trans.b), UVM_NONE);
      end
   endtask
@@ -4421,12 +4421,12 @@ class driver extends uvm_driver#(transaction);
   virtual task run_phase(uvm_phase phase);
    trans = transaction::type_id::create("trans");  //1 arg as belong to uvm_object
     forever begin 
-      seq_item_port.get_next_item(trans); //tell transaction tos end next packet
+      seq_item_port.get_next_item(trans); //request the seqr to send the sequence, once received the sequence, update the trans container with the data 
       `uvm_info("DRV", $sformatf("Data Rcvd: a: %0d, b: %0d",trans.a, trans.b), UVM_NONE);
       //////////////////
       //apply seq to DUT 
       //////////////////
-      seq_item_port.item_done();  //send item_done to seq
+      seq_item_port.item_done();  //send acknowlegement to seqr that driver is ready to receive the next sequence
     end
   endtask
   
