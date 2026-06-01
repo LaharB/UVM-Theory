@@ -4234,13 +4234,13 @@ class sequence1 extends uvm_sequence#(transaction);
   virtual task body();
     `uvm_info("SEQ1", "Trans obj created", UVM_NONE);
     //creation of trans object
-    trans = transaction::type_id::create("trans");  //instance name as path name
+    trans = transaction::type_id::create("trans");  //instance name as path name and at the same time, we send the request to a seqr that we have a seq and go to a wait_for_grant() state
     `uvm_info("SEQ1", "Waiting for Grant from Driver", UVM_NONE);
     wait_for_grant();
     `uvm_info("SEQ1", "Rcvd Grant...Randomizing Data", UVM_NONE);
-    assert(trans.randomize());
+    assert(trans.randomize()); //when we receive a grant, start the randomization
     `uvm_info("SEQ1", "Randomization Done -> Sent Req to Drv", UVM_NONE);
-    send_request(trans);
+    send_request(trans); //once randomization is done, send the trans packet to the sequencer using send_request(trans) and go to wait_for_item_done state
     `uvm_info("SEQ1", "waiting for Item Done Resp from Driver", UVM_NONE);
     wait_for_item_done();
     `uvm_info("SEQ1", "SEQ1 Ended", UVM_NONE);
@@ -4266,13 +4266,14 @@ class driver extends uvm_driver#(transaction);
   virtual task run_phase(uvm_phase phase);
     forever begin   //using forever block as driver has to be always ready for transaction sent from seq and respond 
       `uvm_info("Drv", "Sending Grant for Sequence", UVM_NONE);
-      seq_item_port.get_next_item(t); //sending grant to sequence and getting the values inside trans container 
+      seq_item_port.get_next_item(t); //sending grant to sequence so that we can get the values inside trans container from sequence 
       `uvm_info("DRV", "Applying Seq to DUT", UVM_NONE);
       /////////////////////////
       //apply seq to DUT
       /////////////////////////
       `uvm_info("DRV", "Sending Item Done Resp for Sequence", UVM_NONE);
-      seq_item_port.item_done();   //item_done resp to sequence so seq sends the next packet
+      seq_item_port.item_done();   //item_done resp to sequence so seq sends the next packet 
+      //once item_done acknowledgement is sent to sequence, driver does not need to wait for any acknowledgement from the sequence, it can directly give the next "Sending Grant for Sequence" as it is a non-blocking process
     end
   endtask
 
