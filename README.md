@@ -4043,17 +4043,17 @@ class transaction extends uvm_sequence_item;
   rand bit [3:0] b;
    	   bit [4:0]y;
   
-  function new(input string path = "transaction"); //only one argument as transaction belongs to uvm_object
+  function new(input string path = "transaction"); //only one argument as transaction belongs to uvm_object 
     super.new(path);
   endfunction
   
-  //register the data members to factory for core methods
+  //register the data members to factory for automation
   `uvm_object_utils_begin(transaction)
   	`uvm_field_int(a, UVM_DEFAULT);
   	`uvm_field_int(b, UVM_DEFAULT);
   	`uvm_field_int(y, UVM_DEFAULT);
   `uvm_object_utils_end
-  
+
 endclass
 /////////////////////////////////////////////////////////////////////////////
 //2.Sequence
@@ -4064,11 +4064,12 @@ class sequence1 extends uvm_sequence#(transaction);
     super.new(path);
   endfunction
   
+  //when we call START method in test class, these 3 tasks automatically start executing int he sequence class
   virtual task pre_body();
     `uvm_info("SEQ1", "PRE-BODY EXECUTED", UVM_NONE);
   endtask
   
-  virtual task body();
+  virtual task body(); //the logic or the sequence that we want to send to a DUT will be inside body()
     `uvm_info("SEQ1", "BODY EXECUTED", UVM_NONE);
   endtask
   
@@ -4083,7 +4084,7 @@ endclass
 class driver extends uvm_driver#(transaction);   //driver belong to uvm_component 
   `uvm_component_utils(driver)
   
-  transaction t;  //transaction instance inside driver to communicate with it and tell when to send the next packet
+  transaction t;  //transaction instance will act as a data container to store the sequence received from a sequencer
   
   function new(input string path = "driver", uvm_component parent = null);
     super.new(path, parent);
@@ -4091,16 +4092,19 @@ class driver extends uvm_driver#(transaction);   //driver belong to uvm_componen
   
   virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    t = transaction::type_id::create("t", this);
+    t = transaction::type_id::create("t", this); //creating object of the transaction instance 
   endfunction
   
   //run_phase to communicate with the transaction class
   virtual task run_phase(uvm_phase phase);
     forever begin
     //seq_item_port is the port inside driver
-      seq_item_port.get_next_item(t);  //using get method to get next packet
+      seq_item_port.get_next_item(t);  //get_next_item line tells the sequencer that driver is ready to receive the data, sequencer will convey that to a sequence and we will receive the sequence
+
       /////apply seq to DUT , here we are not doing so
-      seq_item_port.item_done();  //item_done tells thats packet has been sent to DUT
+
+      seq_item_port.item_done();  //item_done tells the sequencer that packet has been sent to DUT and driver is ready to get the next sequence 
+      //this acknowledgement is non-blocking in nature which means we dont need to wait to sent the request for a next sequence until we receive the acknowledgement for a previous sequence 
     end
   endtask
   
@@ -4126,7 +4130,7 @@ class agent extends uvm_agent;
   //connecting driver and sequencer ports 
   virtual function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
-    d.seq_item_port.connect(seqr.seq_item_export);
+    d.seq_item_port.connect(seqr.seq_item_export); //driver has a port and sequencer has an export 
   endfunction
 
 endclass
@@ -4148,7 +4152,7 @@ class env extends uvm_env;
 
 endclass
 /////////////////////////////////////////////////////////////////////////////////////
-//6.test
+//6.test - inside test class, we start the sequencer 
 class test extends uvm_test;
   `uvm_component_utils(test)
   
@@ -4168,7 +4172,7 @@ class test extends uvm_test;
   //run_phase to start the sequence and connect with sequencer
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
-    seq1.start(e.a.seqr);
+    seq1.start(e.a.seqr); //calling start method will start body() inside sequence
     phase.drop_objection(this);
   endtask
   
