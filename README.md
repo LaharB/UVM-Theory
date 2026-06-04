@@ -3159,7 +3159,7 @@ class producer extends uvm_component;
     
   endfunction
   
-  //Step2 writing a method to send data to the consumer
+  //Step2 writing a PUT method to send data to the consumer
   task main_phase(uvm_phase phase);
   //have to hold the simulator till data is sent so use raise objection
     phase.raise_objection(this);
@@ -3174,7 +3174,7 @@ class consumer extends uvm_component;
   `uvm_component_utils(consumer)
   
   uvm_blocking_put_export #(int) recv;
-  uvm_blocking_put_imp #(int, consumer) imp; //2nd argument is the class where u receive data
+  uvm_blocking_put_imp #(int, consumer) imp; //2nd argument is the class where u receive dataf and also where we add the PUT method
     
   function new(input string path = "consumer", uvm_component parent = null);
     super.new(path, parent);  
@@ -3184,7 +3184,8 @@ class consumer extends uvm_component;
     imp =  new("imp", this);
     
   endfunction
-  //task to display the value received
+  //task to display the value received 
+  //wherever we add the PUT method, we need to add that class as 2nd arg in the implementation port  
   task put(int datar);
     `uvm_info("CONS", $sformatf("Data Rcvd : %0d", datar), UVM_NONE);
   endtask
