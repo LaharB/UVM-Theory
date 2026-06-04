@@ -3057,7 +3057,7 @@ class producer extends uvm_component;
   function new(input string path = "producer", uvm_component parent = null);
     super.new(path, parent);
     //add the constructor for this port  
-    send = new("send", this);
+    send = new("send", this); //4 arg - path + parent + max ports + min ports but we use only 2 args, rest of the two args are 1 by default 
     
   endfunction
   
@@ -3096,6 +3096,7 @@ class env extends uvm_env;
     c = consumer::type_id::create("c", this);
   endfunction
   
+  //connect phase is used for connection of TLM 
   virtual function void connect_phase(uvm_phase phase);
     super.connect_phase(phase); 
     p.send.connect(c.recv);   //access "send" using p handle and "recv" using c handle and connect them using .connect  
