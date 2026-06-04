@@ -3031,7 +3031,11 @@ _______________________________________________________________
 <details>
  <summary><b>42.Blocking PUT operation</b></summary><br>
 
-
+- Here Producer is the initiator and Consumer is the responder and so is the control flow.
+- The data flow is from Producer to Consumer so we use **port** for Producer and **export** for Consumer.
+- Since **control flow** and **data flow** is in same direction so we **PUT** method.
+- And PUT method can be used in **Blocking and Non-Blocking way**.
+- This code will give error because export is not the point where a transaction ends i.e. **export cannot be the end of a TLM communication** and there is no proper method inside port or export to send the data , it is done by "implementation".
 
 ### Code
 
