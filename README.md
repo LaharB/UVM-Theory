@@ -3696,7 +3696,7 @@ class consumer extends uvm_component;
   
   int data = 12;
   
-  uvm_blocking_get_imp#(int, consumer) imp;
+  uvm_blocking_get_imp#(int, consumer) imp; //2nd arg is the class where we have added a GET method 
   
   function new(input string path = "consumer", uvm_component parent = null);
     super.new(path, parent);
@@ -3708,7 +3708,7 @@ class consumer extends uvm_component;
     imp  = new("imp", this);
   endfunction
   
-  virtual task get(output int datar ); //output as consumer is sending data to producer 
+  virtual task get(output int datar ); //output because consumer is sending data to producer 
     `uvm_info("CONS", $sformatf("Data Sent : %0d", data), UVM_NONE);
     datar = data; //passing the data = 12 to datar which will be sent to producer
   endtask
@@ -3721,6 +3721,7 @@ class env extends uvm_env;
  
  producer p;
  consumer c;
+ 
  
  function new(input string path = "env", uvm_component parent = null);
    super.new(path, parent);
