@@ -3403,7 +3403,7 @@ endclass
 class producer extends uvm_component;
   `uvm_component_utils(producer)
   
-  subproducer s;
+  subproducer s; //subproducer is inside producer
   
   uvm_blocking_put_port #(int) port;
   
@@ -3420,7 +3420,7 @@ class producer extends uvm_component;
   //subproducer is inside porducer only , so we connect them in porducer class itself , not in env class
   virtual function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
-    s.subport.connect(port);
+    s.subport.connect(port); //connection starts at subport and ends at port so s.subport comes first
   endfunction
 
 endclass
@@ -3487,7 +3487,7 @@ class test extends uvm_test;
  //just to see the heirachy
   virtual function void end_of_elaboration_phase(uvm_phase phase);
     super.end_of_elaboration_phase(phase);
-    uvm_top.print_topology();
+    uvm_top.print_topology(); //uvm_top(global variable) is accessable to all the components
   endfunction
   
 endclass
