@@ -3778,6 +3778,9 @@ __________________________________________________________
 <details>
  <summary><b>48.Transport Port</b></summary><br>
 
+- When we want data flow to be bi-directional i.e. to send and retrieve data, we use **TRANSPORT**
+- We use virtual while implemeting tranport method because we have the skeleton of a transport method defined in a **parent class(uvm_component)** BUT we are implementing this method in a **child class** i.e. consumer class
+
 ### Code
 
 ```systemverilog 
