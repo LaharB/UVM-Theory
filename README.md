@@ -2101,7 +2101,6 @@ module tb;
   end
   
 endmodule 
-
 ``` 
 ### Simulation Result 
 
