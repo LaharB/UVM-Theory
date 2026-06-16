@@ -2213,6 +2213,10 @@ __________________________________________________________
 <details>
  <summary><b>33.Execution of multiple instance phases</b></summary><br>
 
+- When there are multiple objects to be created in a class, then whose build_phase will get executed first ?
+- For example , inside env, we have drv and mon objects to be created so whose build_phase - drv or mon - will get executed first ?
+- Similarly whose connect_phase will get executed first - drv or mon ?
+
 ### Code 1
 
 ```systemverilog 
