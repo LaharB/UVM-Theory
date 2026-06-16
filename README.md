@@ -2438,7 +2438,8 @@ __________________________________________________________
 <details>
  <summary><b>34.Raising Objection</b></summary><br>
 
-To hold the simulator till this task is completed, we use raise and drop objection.
+- UVM won't automatically wait for the time till our time consuming phases like run phase finish executing 
+- So to hold the simulator till this task is completed, we use raise and drop objection.
 
 ### Code
 
