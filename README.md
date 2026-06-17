@@ -2521,8 +2521,6 @@ class comp extends uvm_component;
     phase.drop_objection(this);
   endtask
   
-  
-  
 endclass
  
 ///////////////////////////////////////////////////////////////////////////
@@ -2531,8 +2529,7 @@ module tb;
   initial begin
     run_test("comp");
   end
-  
- 
+
 endmodule 
 ``` 
 ### Simulation Result 
