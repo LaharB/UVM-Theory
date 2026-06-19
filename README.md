@@ -2543,6 +2543,9 @@ __________________________________________________________
 <details>
  <summary><b>36.Time consuming phases in multiple components</b></summary><br>
 
+- Until and unless the **reset phases** of all components ( here , both drv and mon) gets executed, their **main phases** will not start.
+- Similarly for their respective Configure phase and Shutdown phase.
+
 ### Code
 
 ```systemverilog 
