@@ -2676,6 +2676,9 @@ __________________________________________________________
 <details>
  <summary><b>37.Timeout</b></summary><br>
 
+- In this example , our run phase is taking 110 ns to complete and we have set a sufficient time of 200 ns as limit for timeout so our phases will executed before UVM_FATAL gets called.
+- However, if we set the timeout value to say 100 ns , then our phases will not executed completely before UVM_FATAL gets called.
+
 ### Code
 
 ```systemverilog 
