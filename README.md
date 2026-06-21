@@ -2746,7 +2746,50 @@ __________________________________________________________
 ### Code
 
 ```systemverilog 
- 
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+
+class comp extends uvm_component;
+  `uvm_component_utils(comp)
+  
+  function new(string path = "comp", uvm_component parent);
+    super.new(path, parent);
+  endfunction
+  
+  task reset_phase(uvm_phase phase);
+    phase.raise_objection(this);
+    `uvm_info("comp", "Reset Started", UVM_NONE);
+    #10;
+    `uvm_info("comp", "Reset Completed", UVM_NONE);
+	phase.drop_objection(this);   
+  endtask
+  
+ //using drain time for an individual component          
+  task main_phase(uvm_phase phase);
+    phase.phase_done.set_drain_time(this, 200); //first main phase starts at 10ns and runs for 100ns and after it is completed, it stays in the main phase for another 200ns as we set the drain time to 200ns.
+    phase.raise_objection(this);
+    `uvm_info("comp", "Main Phase Started", UVM_NONE);
+    #100;
+    `uvm_info("comp", "Main Phase Completed", UVM_NONE);
+	phase.drop_objection(this);   
+  endtask
+  
+  //After the drain time is over, this post main phase will start at 310ns
+  task post_main_phase(uvm_phase phase);
+    `uvm_info("comp", "Post-Main Phase Started", UVM_NONE);   
+  endtask
+  
+endclass
+/////////////////////////////////////////////////////////////////
+module tb;
+  
+  initial begin
+    run_test("comp");
+  end 
+  
+endmodule  
+```
+
 ### Simulation Result 
 
 ![alt text](<Section_5_UVM_PHASES/Simulation Results/38.Drain Time - Individual component.png>)
