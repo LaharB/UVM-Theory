@@ -867,8 +867,7 @@ module tb;
     run_test("comp");
   end 
   
-endmodule 
-  
+endmodule  
 ``` 
 ### Simulation Result 
 
