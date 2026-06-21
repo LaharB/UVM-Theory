@@ -2740,6 +2740,9 @@ __________________________________________________________
 <details>
  <summary><b>38.Drain Time: Individual component</b></summary><br>
 
+- Drain time is used to give some buffer to the DUT after providing it the stimulus so that the DUT can perform the functionality and process the signals and send it back.
+- Here, the main phase starts at 10ns and runs for 100ns and after it is completed, it stays in the main phase for another 200ns as we set the drain time to 200ns.
+
 ### Code
 
 ```systemverilog 
