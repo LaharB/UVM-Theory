@@ -1224,6 +1224,8 @@ _________________________________________________________________
 <details>
  <summary><b>21.Factory Override - new vs create method</b></summary><br>
 
+The factory override method need to have an uvm_component.
+
 ### Code
 
 ```systemverilog 
