@@ -1112,6 +1112,8 @@ __________________________________________________________________
 <details>
  <summary><b>19.Compare Method</b></summary><br>
 
+Compare Method returns 1 when comparing two objects having the same data memeber values.
+
 ### Code
 
 ```systemverilog 
