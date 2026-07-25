@@ -153,7 +153,39 @@ class env extends uvm_env;
     
 endclass
 
-
+//TEST 
+class test extends uvm_test;
+  `uvm_component_utils(test)
+  
+  //std constr
+  function new(input string path);
+    super.new(path);
+  endfunction
+  
+  env e;
+  sequence_library seqlib;
+  
+  //BUILD
+  virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    e = env::type_id::create("e", this);
+    seqlib = sequence_library::type_id::create("seqlib");
+    seqlib.selection_mode = UVM_SEQ_LIB_RANDC; //choosing the order for creating the sequeces
+    seqlib.min_random_count = 5; //how many transactions we want to create 
+    seqlib.max_random_count = 10;
+    seqlib.init_sequence_library(); //initialize the seq_libr
+    seqlib.print(); //field_macro to print the details
+  endfunction
+  
+  //RUN_PHASE
+  virtual task run_phase(umv_phase phase);
+    phase.raise_objection(this);
+    assert(seqlib.randomize()); //start the sequences
+    seqlib.start(e.a.seqr); //start the sequence
+    phase.drop_objection(this);
+  endtask
+  
+endclass
 
 
 ```
