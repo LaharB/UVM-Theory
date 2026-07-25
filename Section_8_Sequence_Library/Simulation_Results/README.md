@@ -199,9 +199,7 @@ endmodule
 ```
 ### Simulation Results 
 
-
-
-
-
+![alt text](60.Understanding_seq_lib_P1.png)
+![alt text](60.Understanding_seq_lib_P2.png)
 
 </details>
