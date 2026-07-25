@@ -8,15 +8,15 @@
 `include "uvm_macros.svh"
 import uvm_pkg::*;
 
-//transaction or sequence_item
-class transaction extends uvm_seq_item;
+//transaction or sequence_item or packet
+class transaction extends uvm_sequence_item;
   `uvm_object_utils(transaction) //regis to factory to use macros
   
   bit [3:0] a;
   bit [3:0] b;
   
   //std constr
-  function new(input string path);
+  function new(input string path = "transaction");
     super.new(path);
   endfunction  
   
@@ -32,7 +32,7 @@ class seq1 extends uvm_sequence#(transaction);
   transaction tr;
   
   //std constr
-  function new(input string path);
+  function new(input string path = "seq1");
     super.new(path);  
   endfunction
   
@@ -55,11 +55,12 @@ class seq2 extends uvm_sequence#(transaction);
   transaction tr;
   
   //std constr
-  function new(input string path);
+  function new(input string path = "seq2");
     super.new(path);
   endfunction
   
   virtual task body();
+    tr = transaction::type_id::create("tr");
     start_item(tr);
     tr.a = 5;
     tr.b = 5;
@@ -74,7 +75,7 @@ class seq_library extends uvm_sequence_library#(transaction);
   `uvm_sequence_library_utils(seq_library)
   
   //std contr
-  function new(input string path);
+  function new(input string path = "seq_library");
     super.new(path);
     //adding my sequences inside the library
     add_typewide_sequence(seq1::get_type());
@@ -105,7 +106,7 @@ class driver extends uvm_driver#(transaction);
   endtask 
   
 endclass
-
+  
 //AGENT
 class agent extends uvm_agent;
   `uvm_component_utils(agent)
@@ -122,7 +123,7 @@ class agent extends uvm_agent;
   //build_phase - function + super
   virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    d = driver::type_id::create("drv", this);
+    d = driver::type_id::create("d", this);
     seqr = uvm_sequencer#(transaction)::type_id::create("seqr", this);
   endfunction
   
@@ -133,7 +134,7 @@ class agent extends uvm_agent;
   endfunction
 
 endclass
-
+  
 //ENVIRONMENT 
 class env extends uvm_env;
   `uvm_component_utils(env)
@@ -152,24 +153,24 @@ class env extends uvm_env;
   endfunction
     
 endclass
-
+  
 //TEST 
 class test extends uvm_test;
   `uvm_component_utils(test)
   
   //std constr
-  function new(input string path);
-    super.new(path);
+  function new(input string path = "test", uvm_component parent);
+    super.new(path, parent);
   endfunction
   
   env e;
-  sequence_library seqlib;
+  seq_library seqlib;
   
   //BUILD
   virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
     e = env::type_id::create("e", this);
-    seqlib = sequence_library::type_id::create("seqlib");
+    seqlib = seq_library::type_id::create("seqlib");
     seqlib.selection_mode = UVM_SEQ_LIB_RANDC; //choosing the order for creating the sequeces
     seqlib.min_random_count = 5; //how many transactions we want to create 
     seqlib.max_random_count = 10;
@@ -178,14 +179,23 @@ class test extends uvm_test;
   endfunction
   
   //RUN_PHASE
-  virtual task run_phase(umv_phase phase);
+  virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
     assert(seqlib.randomize()); //start the sequences
-    seqlib.start(e.a.seqr); //start the sequence
+    seqlib.start(e.a.seqr); //start the sequences
     phase.drop_objection(this);
   endtask
   
 endclass
+  
+//TB
+module tb;
+  initial begin
+    run_test("test");
+  end
+  
+endmodule
+
 ```
 ### Simulation Results 
 
