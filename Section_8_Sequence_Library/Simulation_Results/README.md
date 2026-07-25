@@ -106,6 +106,34 @@ class driver extends uvm_driver#(transaction);
   
 endclass
 
+//AGENT
+class agent extends uvm_agent;
+  `uvm_component_utils(agent)
+  
+  //std constr
+  function new(input string path, uvm_component parent);
+    super.new(path, parent);  
+  endfunction
+  
+  //connect drv and seqr inside agent
+  driver d;
+  uvm_sequencer#(transaction) seqr;
+
+  //build_phase - function + super
+  virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    d = driver::type_id::create("drv", this);
+    seqr = uvm_sequencer#(transaction)::type_id::create("seqr", this);
+  endfunction
+  
+  //connect phase - fucntion + super
+  virtual function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    d.seq_item_port.connect(seqr.seq_item_export); //connected the    
+  endfunction
+
+endclass
+
 
 
 
