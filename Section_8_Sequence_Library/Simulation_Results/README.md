@@ -1,6 +1,6 @@
 # Section 8 : Understanding Sequence Library
 
-<details><summary>Code & Simulation</summary>
+<details><summary>60.Sequnce Library Code</summary>
 
 ### Code 
 
@@ -186,9 +186,9 @@ class test extends uvm_test;
   endtask
   
 endclass
-
-
 ```
+### Simulation Results 
+
 
 
 
