@@ -85,6 +85,30 @@ class seq_library extends uvm_sequence_library#(transaction);
 endclass
 
 //DRIVER
+class driver extends uvm_driver#(transaction);
+  `uvm_component_utils(driver)   
+    
+  transaction tr;
+  
+  //std constr
+  function new(input string path, uvm_component parent);
+    super.new(path, parent);
+  endfunction
+  
+  virtual task run_phase(uvm_phase phase);
+    forever begin //drv needs to be ready all the time - forever
+      seq_item_port.get_next_item(tr);
+      `uvm_info(get_type_name(), $sformatf("a:%0d, b:%0d", tr.a, tr.b), UVM_NONE); //we can also use "DRV" as tag
+       #10; //drive the data to DUT 
+      seq_item_port.item_done(); //ack to seq
+    end
+  endtask 
+  
+endclass
+
+
+
+
 ```
 
 
